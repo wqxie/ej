@@ -151,7 +151,8 @@ header .nav{
   color: white;
 }
 .tab1{
-	background-color: rgb(255,207,72);
+	background-color: rgba(255,207,72,1);
+	opacity: 0.5;
 }
 .half-tab{
 	margin: 0;
@@ -167,11 +168,10 @@ header .nav{
 	width: 590px;
 	margin: 10px 5px;
 	float: left;
-	border-bottom: 1px solid #FFCF48;
 }
 .chart{
 	width: 255px;
-	margin: 10px 20px;
+	margin: 0px 20px;
 	float: left;
 }
 .chart-intro{
@@ -179,14 +179,18 @@ header .nav{
 	width: 255px;
 	margin: 10px 20px;
 	font-size: 12px;
-	border-bottom: 1px solid #FFCF48;
+	border:  0px;
+}
+.chart-block .chart{
+	margin:20px 20px;
 }
 .chart-block .chart-intro{
 	border-bottom: 0px;
+	margin: 0px 20px;
 }
 .styled-select select {
    background: transparent;
-   width: 100px;
+   width: 120px;
    padding: 5px;
    font-size: 15px;
    line-height: 1;
@@ -194,14 +198,35 @@ header .nav{
    border-radius: 5px;
    height: 34px;
    margin-left: 20px;
+   margin-bottom: 20px;
 }
 
 .tab2{
-	background-color: rgb(200,56,90);
+	background-color: rgba(200,56,90,1);
+	opacity: 0.5;
 }
 .tab [type=radio] {
   display: none;   
 }
+
+
+
+table{
+	width: 250px;
+	margin-bottom: 20px;
+}
+.chart-block table{
+	width: 540px;
+	margin-left: 20px;
+}
+table, tr, td {
+    border: 1px solid #FFCF48;
+}
+td{
+	text-align: center;
+	padding: 10px;
+}
+
 .content {
   position: absolute;
   top: 28px;
@@ -213,9 +238,17 @@ header .nav{
   border: 1px solid #ccc; 
   border-radius: 0 0 10px 10px;
 }
+#total{
+	overflow-y: auto;
+	overflow-x: hidden;
+}
 [type=radio]:checked ~ label {
   border-bottom: 1px solid white;
   z-index: 2;
+  font-weight: bold;
+  font-size: 15px;
+  color: #fffeee;
+  opacity: 1;
 }
 [type=radio]:checked ~ label ~ .content {
   z-index: 1;

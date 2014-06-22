@@ -40,8 +40,8 @@ require_once "header.php";
 				<input type="radio" name="waste" value = "1"><p>Percent of Households Covered by Curbside Recycling</p></input><br />
 				<input type="radio" name="waste" value = "2"><p>Total Onsite Land Releases (TRI)</p></input><br />
 			</div>
-			<div class="filter-btn">Show in Charts</div>
-			<div class="filter-btn">Show in Tables</div>
+			<div class="filter-btn" id="show-chart">Show in Charts</div>
+			<div class="filter-btn" id="show-table">Show in Tables</div>
 		</div>
 		
 	</div>
@@ -54,61 +54,49 @@ require_once "header.php";
 	       <div class="content">
 	           <div class="half-tab first-half-tab">
 	           		<div class="styled-select">
-					   <select>
-					      <option>Distritct 1</option>
-					      <option>Distritct 2</option>
-					      <option>Distritct 3</option>
-					      <option>Distritct 4</option>
-					      <option>Distritct 5</option>
-					      <option>Distritct 6</option>
-					      <option>Distritct 7</option>
+					   <select id="c1">
+					      <option value="1" selected>Distritct 1</option>
+					      <option value="2">Distritct 2</option>
+					      <option value="3">Distritct 3</option>
+					      <option value="4">Distritct 4</option>
+					      <option value="5">Distritct 5</option>
+					      <option value="6">Distritct 6</option>
+					      <option value="7">Distritct 7</option>
 					   </select>
 					</div>
-					<div id="chart1" class="chart"></div>
-					<div class="chart-intro">
-						<p>Category: Neighborhoods</p>
-						<p>Variable: Residential in need of demo</p>
-						<p>Unit: Structures</p>
-						<p>Year 2011: 235</p>
-						<p>Year 2013: 172</p>
-					</div>
-					<div id="chart2" class="chart"></div>
-					<div class="chart-intro">
-						<p>Category: Health</p>
-						<p>Variable: Elevated Blood Lead Level (EBLL)</p>
-						<p>Unit: Children 0-5 with Confirmed EBLL as a Percent of Total Children Tested</p>
-						<p>Year 2011: 8.1%</p>
-						<p>Year 2013: 6.2%</p>
-					</div>
+					<div id="chart11" class="chart"></div>
+					<div class="chart-intro" id="intro11"></div>
+					<div id="chart12" class="chart"></div>
+					<div class="chart-intro" id = "intro12"></div>
+					<div id="chart13" class="chart"></div>
+					<div class="chart-intro" id="intro13"></div>
+					<div id="chart14" class="chart"></div>
+					<div class="chart-intro" id="intro14"></div>
+					<div id="chart15" class="chart"></div>
+					<div class="chart-intro" id="intro15"></div>
 	       		</div>
 	       		<div class="half-tab">
 	       			<div class="styled-select">
-					   <select>
-					      <option>Distritct 1</option>
-					      <option>Distritct 2</option>
-					      <option>Distritct 3</option>
-					      <option>Distritct 4</option>
-					      <option>Distritct 5</option>
-					      <option>Distritct 6</option>
-					      <option>Distritct 7</option>
+					   <select id="c2">
+					      <option value="1">Distritct 1</option>
+					      <option value="2" selected>Distritct 2</option>
+					      <option value="3">Distritct 3</option>
+					      <option value="4">Distritct 4</option>
+					      <option value="5">Distritct 5</option>
+					      <option value="6">Distritct 6</option>
+					      <option value="7">Distritct 7</option>
 					   </select>
 					</div>
-					<div id="chart3" class="chart"></div>
-					<div class="chart-intro">
-						<p>Category: Neighborhoods</p>
-						<p>Variable: Residential in need of demo</p>
-						<p>Unit: Structures</p>
-						<p>Year 2011: 369</p>
-						<p>Year 2013: 71</p>
-					</div>
-					<div id="chart4" class="chart"></div>
-					<div class="chart-intro">
-						<p>Category: Health</p>
-						<p>Variable: Elevated Blood Lead Level (EBLL)</p>
-						<p>Unit: Children 0-5 with Confirmed EBLL as a Percent of Total Children Tested</p>
-						<p>Year 2011: 5.9%</p>
-						<p>Year 2013: 4.8%</p>
-					</div>
+					<div id="chart21" class="chart"></div>
+					<div class="chart-intro" id="intro21"></div>
+					<div id="chart22" class="chart"></div>
+					<div class="chart-intro" id = "intro22"></div>
+					<div id="chart23" class="chart"></div>
+					<div class="chart-intro" id="intro23"></div>
+					<div id="chart24" class="chart"></div>
+					<div class="chart-intro" id = "intro24"></div>
+					<div id="chart25" class="chart"></div>
+					<div class="chart-intro" id="intro25"></div>
 	       		</div>
 	       </div> 
 	   </div>
@@ -117,27 +105,38 @@ require_once "header.php";
 	       <input type="radio" id="tab-2" name="tab-group-1">
 	       <label for="tab-2" class="tab2">City Total</label>
 	       
-	       <div class="content">
-	       		<div class="chart-block">
-	       			<div id="chart5" class="chart"></div>
-					<div class="chart-intro">
-						<p>Category: Neighborhoods</p>
-						<p>Variable: Residential in need of demo</p>
-						<p>Unit: Structures</p>
-						<p>Year 2011: 369</p>
-						<p>Year 2013: 71</p>
-					</div>
+	       <div class="content" id="total">
+	       		<div class="chart-block" id="block31">
+	       			<div id="table31"></div>
+	       			<div id="chart31" class="chart"></div>
+					<div id="intro31"class="chart-intro"></div>
 				</div>
-	           	<div class="chart-block">
-					<div id="chart6" class="chart"></div>
-					<div class="chart-intro">
-						<p>Category: Health</p>
-						<p>Variable: Elevated Blood Lead Level (EBLL)</p>
-						<p>Unit: Children 0-5 with Confirmed EBLL as a Percent of Total Children Tested</p>
-						<p>Year 2011: 5.9%</p>
-						<p>Year 2013: 4.8%</p>
-					</div>
+				<div class="chart-block" id="block32">
+					<div id="table32"></div>
+	       			<div id="chart32" class="chart"></div>
+					<div id="intro32"class="chart-intro"></div>
 				</div>
+				<div class="chart-block" id="block33">
+					<div id="table33"></div>
+	       			<div id="chart33" class="chart"></div>
+					<div id="intro33"class="chart-intro"></div>
+				</div>
+				<div class="chart-block" id="block34">
+					<div id="table34"></div>
+	       			<div id="chart34" class="chart"></div>
+					<div id="intro34"class="chart-intro"></div>
+				</div>
+				<div class="chart-block" id="block35">
+					<div id="table35"></div>
+	       			<div id="chart35" class="chart"></div>
+					<div id="intro35"class="chart-intro"></div>
+				</div>
+				<div class="chart-block" id="block36">
+					<div id="table36"></div>
+	       			<div id="chart36" class="chart"></div>
+					<div id="intro36"class="chart-intro"></div>
+				</div>
+	       
 	       </div> 
 	   </div>
     
