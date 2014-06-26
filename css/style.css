@@ -1,6 +1,7 @@
 body{
 	margin: 0;
 	background-color: #e7e7e7;
+	font-family: 
 }
 header{
 	width: 100%;
@@ -64,8 +65,8 @@ header .nav{
 	width: 300px;
 	height: 50px;
 	background-color: #1ca9c9;
-	border-radius: 10px 10px 0 0;
-}
+/*	border-radius: 10px 10px 0 0;
+*/}
 .filter-head p{
 	margin-top: 15px;
 	margin-left: 10px;
@@ -91,6 +92,7 @@ header .nav{
 	font-size: 18px;
 	margin:30px auto 10px auto;
 	font-weight: bold;
+	color: #f8bc19;
 }
 .filter-option{
 	font-size: 15px;
@@ -106,7 +108,7 @@ header .nav{
 	margin-bottom: 10px;
 }
 .filter-option [type=radio]:checked + p{
-	color: #1ca9c9;
+	font-weight: bold;
 }
 .filter-option p{
 	float: left;
@@ -119,8 +121,8 @@ header .nav{
 	width: 200px;
 	height: 30px;
 	padding-top: 9px;
-	border-radius: 10px;
-	background-color:  #1ca9c9;
+	border-radius: 5px;
+	background-color:  #23b791;
 	color: white;
 	float: left;
 	margin: 10px 50px;
@@ -128,7 +130,7 @@ header .nav{
 	font-weight: bold;
 }
 .filter-btn:hover{
-	background-color:  #0b98b8;
+	background-color:  #23c791;
 }
 .tabs {
 	position: relative;   
@@ -147,12 +149,11 @@ header .nav{
   margin-left: -1px; 
   position: relative;
   left: 1px; 
-  border-radius: 10px 10px 0 0;
+/*  border-radius: 10px 10px 0 0;*/
   color: white;
 }
 .tab1{
-	background-color: rgba(255,207,72,1);
-	opacity: 0.5;
+	background-color: #4ec978;
 }
 .half-tab{
 	margin: 0;
@@ -202,8 +203,7 @@ header .nav{
 }
 
 .tab2{
-	background-color: rgba(200,56,90,1);
-	opacity: 0.5;
+	background-color: #23b791;
 }
 .tab [type=radio] {
   display: none;   
