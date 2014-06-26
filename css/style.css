@@ -57,7 +57,7 @@ header .nav{
 .filter-block{
 	float: left;
 	width: 300px;
-	height: 850px;
+	height: 900px;
 	background-color: white;
 	border-radius: 10px;
 	margin: 20px auto 20px 20px;
@@ -94,7 +94,7 @@ header .nav{
 	width: 100%;
 	float: left;
 	text-align: center;
-	font-size: 14px;
+	font-size: 18px;
 	margin:30px auto 10px auto;
 	font-weight: bold;
 	color: #f8bc19;
@@ -167,7 +167,7 @@ header .nav{
 .half-tab{
 	margin: 0;
 	width: 295px;
-	height: 772px;
+	height: 822px;
 	float: left;
 	overflow: auto;
 }
@@ -246,6 +246,7 @@ td{
   padding: 20px 0;
   border: 1px solid #ccc; 
   border-radius: 0 0 10px 10px;
+  height: 810px;
 }
 #total{
 	overflow-y: auto;
