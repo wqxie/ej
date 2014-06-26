@@ -20,7 +20,7 @@ require_once "header.php";
 			</div>
 			<div class="filter-title">Health</div>
 			<div class="filter-option">
-				<input type="radio" name="health" value = "1"><p>Elevated Blood Lead Level (EBLL)</p></input><br />
+				<input type="radio" name="health" value = "1"><p>Elevated Blood Lead Level(EBLL)</p></input><br />
 				<input type="radio" name="health" value = "2"><p>Infant Mortality Rate</p></input><br />
 			</div>
 			<div class="filter-title">Land</div>

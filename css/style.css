@@ -2,6 +2,8 @@ body{
 	margin: 0;
 	background-color: #e7e7e7;
 	font-family: Arial, Oswald;
+	font-size: 12px;
+	letter-spacing: 1px;
 }
 header{
 	width: 100%;
@@ -64,7 +66,7 @@ header .nav{
 	float: left;
 	width: 300px;
 	height: 50px;
-	background-color: #1ca9c9;
+	background-color: #23b791;
 /*	border-radius: 10px 10px 0 0;
 */}
 .filter-head p{
@@ -72,6 +74,7 @@ header .nav{
 	margin-left: 10px;
 	font-size: 20px;
 	color: white;
+	font-family: Oswald, Arial;
 }
 .filter-content{
 	float: left;
@@ -88,21 +91,25 @@ header .nav{
 	border-radius: 10px;
 }
 .filter-title{
+	width: 100%;
+	float: left;
 	text-align: center;
-	font-size: 18px;
+	font-size: 14px;
 	margin:30px auto 10px auto;
 	font-weight: bold;
 	color: #f8bc19;
+	font-family: Oswald, Arial;
 }
 .filter-option{
-	font-size: 15px;
+	float: left;
+	font-size: 13px;
 	width: 300px;
 	clear: both;
 }
 .filter-option [type=radio]{
 	float: left;
 	clear: left;
-	margin-top: 17px;
+	margin-top: 5px;
 	margin-left: 20px;
 	margin-right: 20px;
 	margin-bottom: 10px;
@@ -113,7 +120,7 @@ header .nav{
 .filter-option p{
 	float: left;
 	width: 240px;
-	margin-left: 0px;
+	margin:5px 0 5px 0 !important;
 	clear: right;
 }
 .filter-btn{
@@ -125,7 +132,7 @@ header .nav{
 	background-color:  #23b791;
 	color: white;
 	float: left;
-	margin: 10px 50px;
+	margin: 30px 50px 0px 50px;
 	font-size: 16px;
 	font-weight: bold;
 }
@@ -151,6 +158,8 @@ header .nav{
   left: 1px; 
 /*  border-radius: 10px 10px 0 0;*/
   color: white;
+  font-family: Oswald, Arial;
+  font-size: 20px;
 }
 .tab1{
 	background-color: #4ec978;
@@ -203,7 +212,7 @@ header .nav{
 }
 
 .tab2{
-	background-color: #23b791;
+	background-color: #88cc75;
 }
 .tab [type=radio] {
   display: none;   
@@ -229,7 +238,7 @@ td{
 
 .content {
   position: absolute;
-  top: 28px;
+  top: 38px;
   left: 0;
   background: white;
   right: 0;
@@ -245,8 +254,6 @@ td{
 [type=radio]:checked ~ label {
   border-bottom: 1px solid white;
   z-index: 2;
-  font-weight: bold;
-  font-size: 15px;
   color: #fffeee;
   opacity: 1;
 }
