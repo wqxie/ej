@@ -78,10 +78,10 @@ function drawChart(air,health,land,neighbor,trans,waste,c1,c2){
 			max_width = Math.max(air_data[0].districts[c1],air_data[0].districts[c2],air_data[1].districts[c1],air_data[1].districts[c2]);
 			svg1.append("text").text(air_data[0].year).attr("x",0).attr("y",20).attr("fill","#f8bc19");
 			svg1.append("rect").attr("width",air_data[0].districts[c1]/max_width*width_ratio).attr("height",20).attr("x",60).attr("y",5).attr("fill","#f8bc19");
-			svg1.append("text").text(air_data[0].districts[c1]).attr("x",70).attr("y",20).attr("fill","white");
+			svg1.append("text").text(air_data[0].districts[c1]).attr("x",70).attr("y",20).attr("fill","black");
 			svg1.append("text").text(air_data[1].year).attr("x",0).attr("y",60).attr("fill","#fbd775");
 			svg1.append("rect").attr("width",air_data[1].districts[c1]/max_width*width_ratio).attr("height",20).attr("x",60).attr("y",45).attr("fill","#fbd775");
-			svg1.append("text").text(air_data[1].districts[c1]).attr("x",70).attr("y",60).attr("fill","white");
+			svg1.append("text").text(air_data[1].districts[c1]).attr("x",70).attr("y",60).attr("fill","black");
 			var info1 = "<p>Category : " + "Air" + "</p><p>Variable :" +  data.air[air-1].variable + "</p><p>Unit : " + data.air[air-1].unit 
 						+ "</p><p>Year" + air_data[0].year + " : " + air_data[0].districts[c1] +  "</p><p>Year" + air_data[1].year + " : " + air_data[1].districts[c1];
 			d3.select("#intro"+"1"+count).selectAll("p").remove();
@@ -92,10 +92,10 @@ function drawChart(air,health,land,neighbor,trans,waste,c1,c2){
 			svg2 = d3.select("#chart"+"2"+count).append("svg").attr("width",255).attr("height",70);
 			svg2.append("text").text(air_data[0].year).attr("x",0).attr("y",20).attr("fill","#f8bc19");
 			svg2.append("rect").attr("width",air_data[0].districts[c2]/max_width*width_ratio).attr("height",20).attr("x",60).attr("y",5).attr("fill","#f8bc19");
-			svg2.append("text").text(air_data[0].districts[c2]).attr("x",70).attr("y",20).attr("fill","white");
+			svg2.append("text").text(air_data[0].districts[c2]).attr("x",70).attr("y",20).attr("fill","black");
 			svg2.append("text").text(air_data[1].year).attr("x",0).attr("y",60).attr("fill","#fbd775");
 			svg2.append("rect").attr("width",air_data[1].districts[c2]/max_width*width_ratio).attr("height",20).attr("x",60).attr("y",45).attr("fill","#fbd775");
-			svg2.append("text").text(air_data[1].districts[c2]).attr("x",70).attr("y",60).attr("fill","white");
+			svg2.append("text").text(air_data[1].districts[c2]).attr("x",70).attr("y",60).attr("fill","black");
 			var info2 = "<p>Category : " + "Air" + "</p><p>Variable :" +  data.air[air-1].variable + "</p><p>Unit : " + data.air[air-1].unit 
 						+ "</p><p>Year" + air_data[0].year + " : " + air_data[0].districts[c2] +  "</p><p>Year" + air_data[1].year + " : " + air_data[1].districts[c2];
 			d3.select("#intro"+"2"+count).selectAll("p").remove();
@@ -108,10 +108,10 @@ function drawChart(air,health,land,neighbor,trans,waste,c1,c2){
 			svg3 = d3.select("#chart"+"3"+count).append("svg").attr("width",255).attr("height",70);
 			svg3.append("text").text(air_data[0].year).attr("x",0).attr("y",20).attr("fill","#f8bc19");
 			svg3.append("rect").attr("width",air_data[0].districts.total/max_total*width_ratio).attr("height",20).attr("x",60).attr("y",5).attr("fill","#f8bc19");
-			svg3.append("text").text(air_data[0].districts.total).attr("x",70).attr("y",20).attr("fill","white");
+			svg3.append("text").text(air_data[0].districts.total).attr("x",70).attr("y",20).attr("fill","black");
 			svg3.append("text").text(air_data[1].year).attr("x",0).attr("y",60).attr("fill","#fbd775");
 			svg3.append("rect").attr("width",air_data[1].districts.total/max_total*width_ratio).attr("height",20).attr("x",60).attr("y",45).attr("fill","#fbd775");
-			svg3.append("text").text(air_data[1].districts.total).attr("x",70).attr("y",60).attr("fill","white");
+			svg3.append("text").text(air_data[1].districts.total).attr("x",70).attr("y",60).attr("fill","black");
 			var info3 = "<p>Category : " + "Air" + "</p><p>Variable :" +  data.air[air-1].variable + "</p><p>Unit : " + data.air[air-1].unit 
 						+ "</p><p>Year" + air_data[0].year + " : " + air_data[0].districts.total +  "</p><p>Year" + air_data[1].year + " : " + air_data[1].districts.total;
 			d3.select("#intro"+"3"+count).selectAll("p").remove();
@@ -133,17 +133,17 @@ function drawChart(air,health,land,neighbor,trans,waste,c1,c2){
 			if (r1 > r2) {
 				svg1.append("circle").attr("cx",center+10).attr("cy",r1+10).attr("r",r1).attr("fill","#f8bc19");
 				svg1.append("circle").attr("cx",center+10).attr("cy",r1+r1-r2+10).attr("r",r2).attr("fill","#fbd775");
-				svg1.append("text").attr("x",center).attr("y",20).attr("font-size","10px").attr("fill","white").text(health_data[0].districts[c1]);
-				svg1.append("text").attr("x",center).attr("y",30).attr("font-size","10px").attr("fill","white").text(health_data[0].year);
-				svg1.append("text").attr("x",center).attr("y",r1*2-10).attr("font-size","10px").attr("fill","white").text(health_data[1].districts[c1]);
-				svg1.append("text").attr("x",center).attr("y",r1*2).attr("font-size","10px").attr("fill","white").text(health_data[1].year);
+				svg1.append("text").attr("x",center).attr("y",20).attr("font-size","10px").attr("fill","black").text(health_data[0].districts[c1]);
+				svg1.append("text").attr("x",center).attr("y",30).attr("font-size","10px").attr("fill","black").text(health_data[0].year);
+				svg1.append("text").attr("x",center).attr("y",r1*2-10).attr("font-size","10px").attr("fill","black").text(health_data[1].districts[c1]);
+				svg1.append("text").attr("x",center).attr("y",r1*2).attr("font-size","10px").attr("fill","black").text(health_data[1].year);
 			} else {
 				svg1.append("circle").attr("cx",center+10).attr("cy",r2+10).attr("r",r2).attr("fill","#fbd775");
 				svg1.append("circle").attr("cx",center+10).attr("cy",r2+r2-r1+10).attr("r",r1).attr("fill","#f8bc19");
-				svg1.append("text").attr("x",center).attr("y",r2*2-10).attr("font-size","10px").attr("fill","white").text(health_data[0].districts[c1]);
-				svg1.append("text").attr("x",center).attr("y",r2*2).attr("font-size","10px").attr("fill","white").text(health_data[0].year);
-				svg1.append("text").attr("x",center).attr("y",20).attr("font-size","10px").attr("fill","white").text(health_data[1].districts[c1]);
-				svg1.append("text").attr("x",center).attr("y",30).attr("font-size","10px").attr("fill","white").text(health_data[1].year);
+				svg1.append("text").attr("x",center).attr("y",r2*2-10).attr("font-size","10px").attr("fill","black").text(health_data[0].districts[c1]);
+				svg1.append("text").attr("x",center).attr("y",r2*2).attr("font-size","10px").attr("fill","black").text(health_data[0].year);
+				svg1.append("text").attr("x",center).attr("y",20).attr("font-size","10px").attr("fill","black").text(health_data[1].districts[c1]);
+				svg1.append("text").attr("x",center).attr("y",30).attr("font-size","10px").attr("fill","black").text(health_data[1].year);
 			}
 			
 			var info1 = "<p>Category : " + "Health" + "</p><p>Variable :" +  data.health[health-1].variable + "</p><p>Unit : " + data.health[health-1].unit 
@@ -159,17 +159,17 @@ function drawChart(air,health,land,neighbor,trans,waste,c1,c2){
 			if (r3 > r4) {
 				svg2.append("circle").attr("cx",center+10).attr("cy",r3+10).attr("r",r3).attr("fill","#f8bc19");
 				svg2.append("circle").attr("cx",center+10).attr("cy",r3+r3-r4+10).attr("r",r4).attr("fill","#fbd775");
-				svg2.append("text").attr("x",center).attr("y",20).attr("font-size","10px").attr("fill","white").text(health_data[0].districts[c2]);
-				svg2.append("text").attr("x",center).attr("y",30).attr("font-size","10px").attr("fill","white").text(health_data[0].year);
-				svg2.append("text").attr("x",center).attr("y",r3*2-10).attr("font-size","10px").attr("fill","white").text(health_data[1].districts[c2]);
-				svg2.append("text").attr("x",center).attr("y",r3*2).attr("font-size","10px").attr("fill","white").text(health_data[1].year);
+				svg2.append("text").attr("x",center).attr("y",20).attr("font-size","10px").attr("fill","black").text(health_data[0].districts[c2]);
+				svg2.append("text").attr("x",center).attr("y",30).attr("font-size","10px").attr("fill","black").text(health_data[0].year);
+				svg2.append("text").attr("x",center).attr("y",r3*2-10).attr("font-size","10px").attr("fill","black").text(health_data[1].districts[c2]);
+				svg2.append("text").attr("x",center).attr("y",r3*2).attr("font-size","10px").attr("fill","black").text(health_data[1].year);
 			} else {
 				svg2.append("circle").attr("cx",center+10).attr("cy",r4+10).attr("r",r4).attr("fill","#fbd775");
 				svg2.append("circle").attr("cx",center+10).attr("cy",r4+r4-r3+10).attr("r",r3).attr("fill","#f8bc19");
-				svg2.append("text").attr("x",center).attr("y",r4*2-10).attr("font-size","10px").attr("fill","white").text(health_data[0].districts[c2]);
-				svg2.append("text").attr("x",center).attr("y",r4*2).attr("font-size","10px").attr("fill","white").text(health_data[0].year);
-				svg2.append("text").attr("x",center).attr("y",20).attr("font-size","10px").attr("fill","white").text(health_data[1].districts[c2]);
-				svg2.append("text").attr("x",center).attr("y",30).attr("font-size","10px").attr("fill","white").text(health_data[1].year);
+				svg2.append("text").attr("x",center).attr("y",r4*2-10).attr("font-size","10px").attr("fill","black").text(health_data[0].districts[c2]);
+				svg2.append("text").attr("x",center).attr("y",r4*2).attr("font-size","10px").attr("fill","black").text(health_data[0].year);
+				svg2.append("text").attr("x",center).attr("y",20).attr("font-size","10px").attr("fill","black").text(health_data[1].districts[c2]);
+				svg2.append("text").attr("x",center).attr("y",30).attr("font-size","10px").attr("fill","black").text(health_data[1].year);
 			}
 			var info2 = "<p>Category : " + "Health" + "</p><p>Variable :" +  data.health[health-1].variable + "</p><p>Unit : " + data.health[health-1].unit 
 						+ "</p><p>Year" + health_data[0].year + " : " + health_data[0].districts[c2] +  "</p><p>Year" + health_data[1].year + " : " + health_data[1].districts[c2];
@@ -186,17 +186,17 @@ function drawChart(air,health,land,neighbor,trans,waste,c1,c2){
 			if (r5 > r6) {
 				svg3.append("circle").attr("cx",center+10).attr("cy",r5+10).attr("r",r5).attr("fill","#f8bc19");
 				svg3.append("circle").attr("cx",center+10).attr("cy",r5+r5-r6+10).attr("r",r6).attr("fill","#fbd775");
-				svg3.append("text").attr("x",center).attr("y",20).attr("font-size","10px").attr("fill","white").text(health_data[0].districts.total);
-				svg3.append("text").attr("x",center).attr("y",30).attr("font-size","10px").attr("fill","white").text(health_data[0].year);
-				svg3.append("text").attr("x",center).attr("y",r5*2-10).attr("font-size","10px").attr("fill","white").text(health_data[1].districts.total);
-				svg3.append("text").attr("x",center).attr("y",r5*2).attr("font-size","10px").attr("fill","white").text(health_data[1].year);
+				svg3.append("text").attr("x",center).attr("y",20).attr("font-size","10px").attr("fill","black").text(health_data[0].districts.total);
+				svg3.append("text").attr("x",center).attr("y",30).attr("font-size","10px").attr("fill","black").text(health_data[0].year);
+				svg3.append("text").attr("x",center).attr("y",r5*2-10).attr("font-size","10px").attr("fill","black").text(health_data[1].districts.total);
+				svg3.append("text").attr("x",center).attr("y",r5*2).attr("font-size","10px").attr("fill","black").text(health_data[1].year);
 			} else {
 				svg3.append("circle").attr("cx",center+10).attr("cy",r6+10).attr("r",r6).attr("fill","#fbd775");
 				svg3.append("circle").attr("cx",center+10).attr("cy",r6+r6-r5+10).attr("r",r5).attr("fill","#f8bc19");
-				svg3.append("text").attr("x",center).attr("y",r6*2-10).attr("font-size","10px").attr("fill","white").text(health_data[0].districts.total);
-				svg3.append("text").attr("x",center).attr("y",r6*2).attr("font-size","10px").attr("fill","white").text(health_data[0].year);
-				svg3.append("text").attr("x",center).attr("y",20).attr("font-size","10px").attr("fill","white").text(health_data[1].districts.total);
-				svg3.append("text").attr("x",center).attr("y",30).attr("font-size","10px").attr("fill","white").text(health_data[1].year);
+				svg3.append("text").attr("x",center).attr("y",r6*2-10).attr("font-size","10px").attr("fill","black").text(health_data[0].districts.total);
+				svg3.append("text").attr("x",center).attr("y",r6*2).attr("font-size","10px").attr("fill","black").text(health_data[0].year);
+				svg3.append("text").attr("x",center).attr("y",20).attr("font-size","10px").attr("fill","black").text(health_data[1].districts.total);
+				svg3.append("text").attr("x",center).attr("y",30).attr("font-size","10px").attr("fill","black").text(health_data[1].year);
 			}
 			var info3 = "<p>Category : " + "Health" + "</p><p>Variable :" +  data.health[health-1].variable + "</p><p>Unit : " + data.health[health-1].unit 
 						+ "</p><p>Year" + health_data[0].year + " : " + health_data[0].districts.total +  "</p><p>Year" + health_data[1].year + " : " + health_data[1].districts.total;
@@ -213,10 +213,10 @@ function drawChart(air,health,land,neighbor,trans,waste,c1,c2){
 			max_width = Math.max(land_data[0].districts[c1],land_data[0].districts[c2],land_data[1].districts[c1],land_data[1].districts[c2]);
 			svg1.append("text").text(land_data[0].year).attr("x",0).attr("y",20).attr("fill","#f8bc19");
 			svg1.append("rect").attr("width",land_data[0].districts[c1]/max_width*width_ratio).attr("height",20).attr("x",60).attr("y",5).attr("fill","#f8bc19");
-			svg1.append("text").text(land_data[0].districts[c1]).attr("x",70).attr("y",20).attr("fill","white");
+			svg1.append("text").text(land_data[0].districts[c1]).attr("x",70).attr("y",20).attr("fill","black");
 			svg1.append("text").text(land_data[1].year).attr("x",0).attr("y",60).attr("fill","#fbd775");
 			svg1.append("rect").attr("width",land_data[1].districts[c1]/max_width*width_ratio).attr("height",20).attr("x",60).attr("y",45).attr("fill","#fbd775");
-			svg1.append("text").text(land_data[1].districts[c1]).attr("x",70).attr("y",60).attr("fill","white");
+			svg1.append("text").text(land_data[1].districts[c1]).attr("x",70).attr("y",60).attr("fill","black");
 			var info1 = "<p>Category : " + "Land" + "</p><p>Variable :" +  data.land[land-1].variable + "</p><p>Unit : " + data.land[land-1].unit 
 						+ "</p><p>Year" + land_data[0].year + " : " + land_data[0].districts[c1] +  "</p><p>Year" + land_data[1].year + " : " + land_data[1].districts[c1];
 			d3.select("#intro"+"1"+count).selectAll("p").remove();
@@ -227,10 +227,10 @@ function drawChart(air,health,land,neighbor,trans,waste,c1,c2){
 			svg2 = d3.select("#chart"+"2"+count).append("svg").attr("width",255).attr("height",70);
 			svg2.append("text").text(land_data[0].year).attr("x",0).attr("y",20).attr("fill","#f8bc19");
 			svg2.append("rect").attr("width",land_data[0].districts[c2]/max_width*width_ratio).attr("height",20).attr("x",60).attr("y",5).attr("fill","#f8bc19");
-			svg2.append("text").text(land_data[0].districts[c2]).attr("x",70).attr("y",20).attr("fill","white");
+			svg2.append("text").text(land_data[0].districts[c2]).attr("x",70).attr("y",20).attr("fill","black");
 			svg2.append("text").text(land_data[1].year).attr("x",0).attr("y",60).attr("fill","#fbd775");
 			svg2.append("rect").attr("width",land_data[1].districts[c2]/max_width*width_ratio).attr("height",20).attr("x",60).attr("y",45).attr("fill","#fbd775");
-			svg2.append("text").text(land_data[1].districts[c2]).attr("x",70).attr("y",60).attr("fill","white");
+			svg2.append("text").text(land_data[1].districts[c2]).attr("x",70).attr("y",60).attr("fill","black");
 			var info2 = "<p>Category : " + "Land" + "</p><p>Variable :" +  data.land[land-1].variable + "</p><p>Unit : " + data.land[land-1].unit 
 						+ "</p><p>Year" + land_data[0].year + " : " + land_data[0].districts[c2] +  "</p><p>Year" + land_data[1].year + " : " + land_data[1].districts[c2];
 			d3.select("#intro"+"2"+count).selectAll("p").remove();
@@ -243,10 +243,10 @@ function drawChart(air,health,land,neighbor,trans,waste,c1,c2){
 			svg3 = d3.select("#chart"+"3"+count).append("svg").attr("width",255).attr("height",70);
 			svg3.append("text").text(land_data[0].year).attr("x",0).attr("y",20).attr("fill","#f8bc19");
 			svg3.append("rect").attr("width",land_data[0].districts.total/max_total*width_ratio).attr("height",20).attr("x",60).attr("y",5).attr("fill","#f8bc19");
-			svg3.append("text").text(land_data[0].districts.total).attr("x",70).attr("y",20).attr("fill","white");
+			svg3.append("text").text(land_data[0].districts.total).attr("x",70).attr("y",20).attr("fill","black");
 			svg3.append("text").text(land_data[1].year).attr("x",0).attr("y",60).attr("fill","#fbd775");
 			svg3.append("rect").attr("width",land_data[1].districts.total/max_total*width_ratio).attr("height",20).attr("x",60).attr("y",45).attr("fill","#fbd775");
-			svg3.append("text").text(land_data[1].districts.total).attr("x",70).attr("y",60).attr("fill","white");
+			svg3.append("text").text(land_data[1].districts.total).attr("x",70).attr("y",60).attr("fill","black");
 			var info3 = "<p>Category : " + "Land" + "</p><p>Variable :" +  data.land[land-1].variable + "</p><p>Unit : " + data.land[land-1].unit 
 						+ "</p><p>Year" + land_data[0].year + " : " + land_data[0].districts.total +  "</p><p>Year" + land_data[1].year + " : " + land_data[1].districts.total;
 			d3.select("#intro"+"3"+count).selectAll("p").remove();
@@ -262,10 +262,10 @@ function drawChart(air,health,land,neighbor,trans,waste,c1,c2){
 			max_width = Math.max(neighbor_data[0].districts[c1],neighbor_data[0].districts[c2],neighbor_data[1].districts[c1],neighbor_data[1].districts[c2]);
 			svg1.append("text").text(neighbor_data[0].year).attr("x",0).attr("y",20).attr("fill","#f8bc19");
 			svg1.append("rect").attr("width",neighbor_data[0].districts[c1]/max_width*width_ratio).attr("height",20).attr("x",60).attr("y",5).attr("fill","#f8bc19");
-			svg1.append("text").text(neighbor_data[0].districts[c1]).attr("x",70).attr("y",20).attr("fill","white");
+			svg1.append("text").text(neighbor_data[0].districts[c1]).attr("x",70).attr("y",20).attr("fill","black");
 			svg1.append("text").text(neighbor_data[1].year).attr("x",0).attr("y",60).attr("fill","#fbd775");
 			svg1.append("rect").attr("width",neighbor_data[1].districts[c1]/max_width*width_ratio).attr("height",20).attr("x",60).attr("y",45).attr("fill","#fbd775");
-			svg1.append("text").text(neighbor_data[1].districts[c1]).attr("x",70).attr("y",60).attr("fill","white");
+			svg1.append("text").text(neighbor_data[1].districts[c1]).attr("x",70).attr("y",60).attr("fill","black");
 			var info1 = "<p>Category : " + "Neighborhoods" + "</p><p>Variable :" +  data.neighbor[neighbor-1].variable + "</p><p>Unit : " + data.neighbor[neighbor-1].unit 
 						+ "</p><p>Year" + neighbor_data[0].year + " : " + neighbor_data[0].districts[c1] +  "</p><p>Year" + neighbor_data[1].year + " : " + neighbor_data[1].districts[c1];
 			d3.select("#intro"+"1"+count).selectAll("p").remove();
@@ -276,10 +276,10 @@ function drawChart(air,health,land,neighbor,trans,waste,c1,c2){
 			svg2 = d3.select("#chart"+"2"+count).append("svg").attr("width",255).attr("height",70);
 			svg2.append("text").text(neighbor_data[0].year).attr("x",0).attr("y",20).attr("fill","#f8bc19");
 			svg2.append("rect").attr("width",neighbor_data[0].districts[c2]/max_width*width_ratio).attr("height",20).attr("x",60).attr("y",5).attr("fill","#f8bc19");
-			svg2.append("text").text(neighbor_data[0].districts[c2]).attr("x",70).attr("y",20).attr("fill","white");
+			svg2.append("text").text(neighbor_data[0].districts[c2]).attr("x",70).attr("y",20).attr("fill","black");
 			svg2.append("text").text(neighbor_data[1].year).attr("x",0).attr("y",60).attr("fill","#fbd775");
 			svg2.append("rect").attr("width",neighbor_data[1].districts[c2]/max_width*width_ratio).attr("height",20).attr("x",60).attr("y",45).attr("fill","#fbd775");
-			svg2.append("text").text(neighbor_data[1].districts[c2]).attr("x",70).attr("y",60).attr("fill","white");
+			svg2.append("text").text(neighbor_data[1].districts[c2]).attr("x",70).attr("y",60).attr("fill","black");
 			var info2 = "<p>Category : " + "Neighborhoods" + "</p><p>Variable :" +  data.neighbor[neighbor-1].variable + "</p><p>Unit : " + data.neighbor[neighbor-1].unit 
 						+ "</p><p>Year" + neighbor_data[0].year + " : " + neighbor_data[0].districts[c2] +  "</p><p>Year" + neighbor_data[1].year + " : " + neighbor_data[1].districts[c2];
 			d3.select("#intro"+"2"+count).selectAll("p").remove();
@@ -292,10 +292,10 @@ function drawChart(air,health,land,neighbor,trans,waste,c1,c2){
 			svg3 = d3.select("#chart"+"3"+count).append("svg").attr("width",255).attr("height",70);
 			svg3.append("text").text(neighbor_data[0].year).attr("x",0).attr("y",20).attr("fill","#f8bc19");
 			svg3.append("rect").attr("width",neighbor_data[0].districts.total/max_total*width_ratio).attr("height",20).attr("x",60).attr("y",5).attr("fill","#f8bc19");
-			svg3.append("text").text(neighbor_data[0].districts.total).attr("x",70).attr("y",20).attr("fill","white");
+			svg3.append("text").text(neighbor_data[0].districts.total).attr("x",70).attr("y",20).attr("fill","black");
 			svg3.append("text").text(neighbor_data[1].year).attr("x",0).attr("y",60).attr("fill","#fbd775");
 			svg3.append("rect").attr("width",neighbor_data[1].districts.total/max_total*width_ratio).attr("height",20).attr("x",60).attr("y",45).attr("fill","#fbd775");
-			svg3.append("text").text(neighbor_data[1].districts.total).attr("x",70).attr("y",60).attr("fill","white");
+			svg3.append("text").text(neighbor_data[1].districts.total).attr("x",70).attr("y",60).attr("fill","black");
 			var info3 = "<p>Category : " + "Neighborhoods" + "</p><p>Variable :" +  data.neighbor[neighbor-1].variable + "</p><p>Unit : " + data.neighbor[neighbor-1].unit 
 						+ "</p><p>Year" + neighbor_data[0].year + " : " + neighbor_data[0].districts.total +  "</p><p>Year" + neighbor_data[1].year + " : " + neighbor_data[1].districts.total;
 			d3.select("#intro"+"3"+count).selectAll("p").remove();
@@ -311,10 +311,10 @@ function drawChart(air,health,land,neighbor,trans,waste,c1,c2){
 			max_width = Math.max(trans_data[0].districts[c1],trans_data[0].districts[c2],trans_data[1].districts[c1],trans_data[1].districts[c2]);
 			svg1.append("text").text(trans_data[0].year).attr("x",0).attr("y",20).attr("fill","#f8bc19");
 			svg1.append("rect").attr("width",trans_data[0].districts[c1]/max_width*width_ratio).attr("height",20).attr("x",60).attr("y",5).attr("fill","#f8bc19");
-			svg1.append("text").text(trans_data[0].districts[c1]).attr("x",70).attr("y",20).attr("fill","white");
+			svg1.append("text").text(trans_data[0].districts[c1]).attr("x",70).attr("y",20).attr("fill","black");
 			svg1.append("text").text(trans_data[1].year).attr("x",0).attr("y",60).attr("fill","#fbd775");
 			svg1.append("rect").attr("width",trans_data[1].districts[c1]/max_width*width_ratio).attr("height",20).attr("x",60).attr("y",45).attr("fill","#fbd775");
-			svg1.append("text").text(trans_data[1].districts[c1]).attr("x",70).attr("y",60).attr("fill","white");
+			svg1.append("text").text(trans_data[1].districts[c1]).attr("x",70).attr("y",60).attr("fill","black");
 			var info1 = "<p>Category : " + "Transportation" + "</p><p>Variable :" +  data.trans[trans-1].variable + "</p><p>Unit : " + data.trans[trans-1].unit 
 						+ "</p><p>Year" + trans_data[0].year + " : " + trans_data[0].districts[c1] +  "</p><p>Year" + trans_data[1].year + " : " + trans_data[1].districts[c1];
 			d3.select("#intro"+"1"+count).selectAll("p").remove();
@@ -325,10 +325,10 @@ function drawChart(air,health,land,neighbor,trans,waste,c1,c2){
 			svg2 = d3.select("#chart"+"2"+count).append("svg").attr("width",255).attr("height",70);
 			svg2.append("text").text(trans_data[0].year).attr("x",0).attr("y",20).attr("fill","#f8bc19");
 			svg2.append("rect").attr("width",trans_data[0].districts[c2]/max_width*width_ratio).attr("height",20).attr("x",60).attr("y",5).attr("fill","#f8bc19");
-			svg2.append("text").text(trans_data[0].districts[c2]).attr("x",70).attr("y",20).attr("fill","white");
+			svg2.append("text").text(trans_data[0].districts[c2]).attr("x",70).attr("y",20).attr("fill","black");
 			svg2.append("text").text(trans_data[1].year).attr("x",0).attr("y",60).attr("fill","#fbd775");
 			svg2.append("rect").attr("width",trans_data[1].districts[c2]/max_width*width_ratio).attr("height",20).attr("x",60).attr("y",45).attr("fill","#fbd775");
-			svg2.append("text").text(trans_data[1].districts[c2]).attr("x",70).attr("y",60).attr("fill","white");
+			svg2.append("text").text(trans_data[1].districts[c2]).attr("x",70).attr("y",60).attr("fill","black");
 			var info2 = "<p>Category : " + "Transportation" + "</p><p>Variable :" +  data.trans[trans-1].variable + "</p><p>Unit : " + data.trans[trans-1].unit 
 						+ "</p><p>Year" + trans_data[0].year + " : " + trans_data[0].districts[c2] +  "</p><p>Year" + trans_data[1].year + " : " + trans_data[1].districts[c2];
 			d3.select("#intro"+"2"+count).selectAll("p").remove();
@@ -341,10 +341,10 @@ function drawChart(air,health,land,neighbor,trans,waste,c1,c2){
 			svg3 = d3.select("#chart"+"3"+count).append("svg").attr("width",255).attr("height",70);
 			svg3.append("text").text(trans_data[0].year).attr("x",0).attr("y",20).attr("fill","#f8bc19");
 			svg3.append("rect").attr("width",trans_data[0].districts.total/max_total*width_ratio).attr("height",20).attr("x",60).attr("y",5).attr("fill","#f8bc19");
-			svg3.append("text").text(trans_data[0].districts.total).attr("x",70).attr("y",20).attr("fill","white");
+			svg3.append("text").text(trans_data[0].districts.total).attr("x",70).attr("y",20).attr("fill","black");
 			svg3.append("text").text(trans_data[1].year).attr("x",0).attr("y",60).attr("fill","#fbd775");
 			svg3.append("rect").attr("width",trans_data[1].districts.total/max_total*width_ratio).attr("height",20).attr("x",60).attr("y",45).attr("fill","#fbd775");
-			svg3.append("text").text(trans_data[1].districts.total).attr("x",70).attr("y",60).attr("fill","white");
+			svg3.append("text").text(trans_data[1].districts.total).attr("x",70).attr("y",60).attr("fill","black");
 			var info3 = "<p>Category : " + "Transportation" + "</p><p>Variable :" +  data.trans[trans-1].variable + "</p><p>Unit : " + data.trans[trans-1].unit 
 						+ "</p><p>Year" + trans_data[0].year + " : " + trans_data[0].districts.total +  "</p><p>Year" + trans_data[1].year + " : " + trans_data[1].districts.total;
 			d3.select("#intro"+"3"+count).selectAll("p").remove();
@@ -360,10 +360,10 @@ function drawChart(air,health,land,neighbor,trans,waste,c1,c2){
 			max_width = Math.max(waste_data[0].districts[c1],waste_data[0].districts[c2],waste_data[1].districts[c1],waste_data[1].districts[c2]);
 			svg1.append("text").text(waste_data[0].year).attr("x",0).attr("y",20).attr("fill","#f8bc19");
 			svg1.append("rect").attr("width",waste_data[0].districts[c1]/max_width*width_ratio).attr("height",20).attr("x",60).attr("y",5).attr("fill","#f8bc19");
-			svg1.append("text").text(waste_data[0].districts[c1]).attr("x",70).attr("y",20).attr("fill","white");
+			svg1.append("text").text(waste_data[0].districts[c1]).attr("x",70).attr("y",20).attr("fill","black");
 			svg1.append("text").text(waste_data[1].year).attr("x",0).attr("y",60).attr("fill","#fbd775");
 			svg1.append("rect").attr("width",waste_data[1].districts[c1]/max_width*width_ratio).attr("height",20).attr("x",60).attr("y",45).attr("fill","#fbd775");
-			svg1.append("text").text(waste_data[1].districts[c1]).attr("x",70).attr("y",60).attr("fill","white");
+			svg1.append("text").text(waste_data[1].districts[c1]).attr("x",70).attr("y",60).attr("fill","black");
 			var info1 = "<p>Category : " + "Waste" + "</p><p>Variable :" +  data.waste[waste-1].variable + "</p><p>Unit : " + data.waste[waste-1].unit 
 						+ "</p><p>Year" + waste_data[0].year + " : " + waste_data[0].districts[c1] +  "</p><p>Year" + waste_data[1].year + " : " + waste_data[1].districts[c1];
 			d3.select("#intro"+"1"+count).selectAll("p").remove();
@@ -374,10 +374,10 @@ function drawChart(air,health,land,neighbor,trans,waste,c1,c2){
 			svg2 = d3.select("#chart"+"2"+count).append("svg").attr("width",255).attr("height",70);
 			svg2.append("text").text(waste_data[0].year).attr("x",0).attr("y",20).attr("fill","#f8bc19");
 			svg2.append("rect").attr("width",waste_data[0].districts[c2]/max_width*width_ratio).attr("height",20).attr("x",60).attr("y",5).attr("fill","#f8bc19");
-			svg2.append("text").text(waste_data[0].districts[c2]).attr("x",70).attr("y",20).attr("fill","white");
+			svg2.append("text").text(waste_data[0].districts[c2]).attr("x",70).attr("y",20).attr("fill","black");
 			svg2.append("text").text(waste_data[1].year).attr("x",0).attr("y",60).attr("fill","#fbd775");
 			svg2.append("rect").attr("width",waste_data[1].districts[c2]/max_width*width_ratio).attr("height",20).attr("x",60).attr("y",45).attr("fill","#fbd775");
-			svg2.append("text").text(waste_data[1].districts[c2]).attr("x",70).attr("y",60).attr("fill","white");
+			svg2.append("text").text(waste_data[1].districts[c2]).attr("x",70).attr("y",60).attr("fill","black");
 			var info2 = "<p>Category : " + "Waste" + "</p><p>Variable :" +  data.waste[waste-1].variable + "</p><p>Unit : " + data.waste[waste-1].unit 
 						+ "</p><p>Year" + waste_data[0].year + " : " + waste_data[0].districts[c2] +  "</p><p>Year" + waste_data[1].year + " : " + waste_data[1].districts[c2];
 			d3.select("#intro"+"2"+count).selectAll("p").remove();
@@ -390,10 +390,10 @@ function drawChart(air,health,land,neighbor,trans,waste,c1,c2){
 			svg3 = d3.select("#chart"+"3"+count).append("svg").attr("width",255).attr("height",70);
 			svg3.append("text").text(waste_data[0].year).attr("x",0).attr("y",20).attr("fill","#f8bc19");
 			svg3.append("rect").attr("width",waste_data[0].districts.total/max_total*width_ratio).attr("height",20).attr("x",60).attr("y",5).attr("fill","#f8bc19");
-			svg3.append("text").text(waste_data[0].districts.total).attr("x",70).attr("y",20).attr("fill","white");
+			svg3.append("text").text(waste_data[0].districts.total).attr("x",70).attr("y",20).attr("fill","black");
 			svg3.append("text").text(waste_data[1].year).attr("x",0).attr("y",60).attr("fill","#fbd775");
 			svg3.append("rect").attr("width",waste_data[1].districts.total/max_total*width_ratio).attr("height",20).attr("x",60).attr("y",45).attr("fill","#fbd775");
-			svg3.append("text").text(waste_data[1].districts.total).attr("x",70).attr("y",60).attr("fill","white");
+			svg3.append("text").text(waste_data[1].districts.total).attr("x",70).attr("y",60).attr("fill","black");
 			var info3 = "<p>Category : " + "Waste" + "</p><p>Variable :" +  data.waste[waste-1].variable + "</p><p>Unit : " + data.waste[waste-1].unit 
 						+ "</p><p>Year" + waste_data[0].year + " : " + waste_data[0].districts.total +  "</p><p>Year" + waste_data[1].year + " : " + waste_data[1].districts.total;
 			d3.select("#intro"+"3"+count).selectAll("p").remove();
