@@ -1,0 +1,525 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=yes" /> 
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+	<title>Detroit City Council Districts</title>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+	<script src="https://datadrivendetroit.org/council_districts/infobox_packed.js"></script>
+	<script type="text/javascript" src="charts.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+	<style>
+		body {height:100%; width:100%; margin:0; padding:0; overflow:hidden; font-family: Geneva, 'Lucida Sans', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;}
+
+		a{cursor:pointer;}
+		
+		#map_canvas {height:100%; width:100%; z-index:1; position:absolute; top:0; left:0;}
+		#side_panel {height:450px; width:240px; z-index:2; position:absolute; top:0; right:0px; overflow:hidden; padding:0px; background:white; background:rgba(255,255,255,0.8)}
+		a.tabs {height:25px; width:25px; position:absolute; top:5px; right:240px; z-index:3; background:white; background:rgba(255,255,255,0.80); box-shadow:-2px 2px 2px gray; border:1px solid #5C5C5C; border-right:none;}
+		a.tabs:hover {background:lightGray}
+		#close{background-image:url(http://www.datadrivendetroit.org/council_districts/sprites.png)}
+		.lines{width:2px; border-left:1px solid #5C5C5C; right:238px; box-shadow:-2px 0px 2px gray; background:none; position:absolute; z-index:3}
+		
+		/*Vertical Tabs*/
+		.vtabs {height:25px; width:228px; border:1px solid gray; margin:5px 5px 0px 5px; overflow:hidden;}
+		.active {}
+		a.accordion{height:25px; color:white; background:#A7A7A7; width:220px; display:block; line-height:25px; padding-left:8px; font-size:12px; text-shadow:-1px 1px 2px black
+		}
+		a.accordion:hover{background:gray;}
+		.vcontent {overflow-x:hidden; overflow-y:auto; height: 380px;}
+		
+		/*Data Table*/
+		.row{float:left; width:100%; font-size:11px; border-bottom:1px solid #C7C7C7; padding:6px 0px}
+		.row_t{float:left; width:120px; padding:0px 8px; text-align:right; color:gray;}
+		.row_i{float:left;}
+		.row_s{float:left; width:100%; padding:4px 0px; background:#DFDFDF; text-align:center; font-size:10px; color:#5C5C5C; border-bottom:1px solid #C7C7C7;}
+		
+		.charts{opacity:0.8; height:inherit; width:inherit}
+		.button{width:200px !important; margin:5px auto; border-radius:6px; border:1px solid gray; text-align:center; line-height:14px !important; 	padding:6px 6px !important; height:auto !important; 
+			background: #279ee8 !important; /* Old browsers */
+			background: -moz-linear-gradient(top,  #279ee8 0%, #003FC2 100%)!important; /* FF3.6+ */
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#279ee8), color-stop(100%,#003FC2))!important; /* Chrome,Safari4+ */
+			background: -webkit-linear-gradient(top,  #279ee8 0%,#003FC2 100%)!important; /* Chrome10+,Safari5.1+ */
+			background: -o-linear-gradient(top,  #279ee8 0%,#003FC2 100%)!important; /* Opera 11.10+ */
+			background: -ms-linear-gradient(top,  #279ee8 0%,#003FC2 100%)!important; /* IE10+ */
+			background: linear-gradient(to bottom,  #279ee8 0%,#003FC2 100%)!important; /* W3C */
+			box-shadow: inset -1px 1px 2px rgb(190, 224, 255), inset 1px -1px 2px rgb(0, 68, 141), inset 0px 0px 2px whitesmoke;
+			display:block; color:white; text-shadow:1px 1px 2px gray; font-size:12px;
+		}
+		.button:hover{
+			background: #003FC2 !important; /* Old browsers */
+			box-shadow: inset -1px 1px 2px rgb(0,42,87), inset 1px -1px 2px white;
+		}
+		a.dlb{display:block; padding:8px 10px; color:rgb(61,61,61); text-decoration:none; font-size:12px; border-bottom:1px solid silver; }
+		a.dlb:hover{background:lightgray;}
+		
+		#mdownload{width:175px !important; text-decoration:none;}
+		
+		#legend{position:absolute; left:8px; bottom:50px; z-index:3; width:104px; border:1px solid rgb(70, 70, 70); background:white; background:rgba(255,255,255, 0.8); border-radius:3px; box-shadow:0px 2px 5px gray; display:none; overflow:hidden;}
+		.lrow{width:100%; float:left;}
+		.patch{width:12px; height:12px; float:left; margin-left:4px; margin-top:3px; opacity:0.8; border-radius:6px;}
+		.ptitle{float:left; font-size:10px; margin-left:5px; width:70px; padding:2px; cursor:default;}
+		.ptitle:hover{background:gray; color:white;}
+		#linner{float:left; width:98px; margin:3px;}
+		
+		.instruct{font-size:20pt; color:gray; padding:6px; margin:0px}
+		
+		.tt_outer{padding:5px; opacity:0.8; box-shadow:1px 1px 2px gray; display:inline-block; text-align:center;}
+		.tt_inner{text-align:center; padding:3px 6px 2px; background:#2C2C2C; color:white; background: rgba(0, 0, 0, 0.6); display:inline-block; vertical-align:top;}
+		.wedges{cursor:default;}
+	</style>
+	
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-16242914-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+    <script>
+
+	  var ibLabel;
+	  var tooltip;
+	  var layer;
+	  var dists;
+	  var ctheme = [];
+	  var stheme = [];
+	  var gtheme = [{polygonOptions: {fillColor:"#D6D6D6"}}];
+	  var ttheme = [{polygonOptions: {strokeOpacity:0.1, fillOpacity:0.2}}];
+	  var where = [];
+	  var tooltips = [];
+	  var layer;
+	  
+      function initialize() {
+		google.maps.visualRefresh = true;
+ //     bounds = new google.maps.LatLngBounds(new google.maps.LatLng(42.252410, -83.291576), new google.maps.LatLng(42.450315, -82.913235));
+		center = new google.maps.LatLng(42.35144,-83.1024);
+
+        map = new google.maps.Map(document.getElementById('map_canvas'), {
+			disableDefaultUI: false,
+			panControl:false,
+			streetViewControl:false,
+			zoomControl:true,
+			zoomControlOptions:{style: google.maps.ZoomControlStyle.SMALL, position: google.maps.ControlPosition.LEFT_TOP},
+			mapTypeId: google.maps.MapTypeId.ROAD,
+			mapTypeControl: true,
+			mapTypeControlOptions: {
+			  style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+			  position: google.maps.ControlPosition.TOP_LEFT
+			},	
+			minZoom:11,
+			maxZoom:20
+        });
+
+	  var dstyle = [
+					  {
+						"stylers": [
+						  { "saturation": -100 },
+						  { "weight": 0.5 }
+						]
+					  },{
+						"featureType": "administrative",
+						"stylers": [
+						  { "visibility": "on" },
+						  { "gamma": 2.54 }
+						]
+					  },{
+					    "featureType": "landscape",
+					    "elementType": "geometry",
+					    "stylers": [
+					      { "color": "#ffffff" }
+					    ]
+					  },{
+					    "featureType": "water",
+					    "stylers": [
+					      { "color": "#00a0ff" },
+					      { "saturation": -23 },
+					      { "lightness": 78 }
+					    ]
+					  },{
+					    "featureType": "poi.park",
+					    "elementType": "geometry.fill",
+					    "stylers": [
+					      { "color": "#E0E6D1" }
+					    ]
+					  }
+					]; 
+					
+	  map.setOptions({styles:dstyle});
+		
+	  var styledMapType = new google.maps.StyledMapType(dstyle, {map:map, name:'Styled Map'});
+
+	  map.mapTypes.set('map-style', styledMapType);
+	  map.setMapTypeId('map-style');
+		
+//	  map.fitBounds(bounds);
+	  map.setCenter(center);
+	  map.setZoom(11);
+//	  map.panBy(130,0)
+		
+		
+        layer = new google.maps.FusionTablesLayer({
+          query: {
+            select: 'geometry',
+            from: '1RICAS_EEVyVNDCx-e3UqQ2bwvVRzK0zBHt0in7k'
+          },
+		  suppressInfoWindows:true
+        });
+		
+        layer.setMap(map);
+		
+		$('#side_panel, .vcontent, .vtabs').bind("mousewheel",function(){return false;});
+		
+		try {
+			for (x in dists)
+			{
+			var labelText = dists[x][1];
+			var Loc = new google.maps.LatLng(dists[x][3],dists[x][2]);
+			var myOptions = {
+				 content: labelText
+				,boxStyle: {
+				   border: "none"
+				  ,textAlign: "left"
+				  ,fontSize: "20px"
+				  ,color:"white"
+				  ,width:"50px"
+				  ,height:"50px"
+				 }
+				,disableAutoPan: true
+				,pixelOffset: new google.maps.Size(5,0)
+				,position: Loc
+				,closeBoxURL: ""
+				,isHidden: false
+				,pane: "floatPane"
+				,enableEventPropagation: true
+				,zindex: 1
+			};
+			eval("window.ibLabel"+x+" = new InfoBox(myOptions)");
+			eval("ibLabel"+x+".open(map)");
+			};
+			createchartdivs(dists);	
+			}
+		catch(err){ alert(err); $('#o_buttons').html('<p class="instruct">Unfortunately, your browser does not support these options.</p>');}
+			
+		google.maps.event.addListener(layer, 'click', function(e) {
+			where = {where: "DistrictNu = '" + e.row['DistrictNu'].value + "'", polygonOptions: {strokeColor:"#FFFFFF", strokeWeight:3, strokeOpacity:1}};
+			layer.setOptions({styles: ctheme.concat(where)});	
+			
+			a = "<div class='row'><div class='row_t'>";
+			b = "</div><div class='row_i'>";
+			c = "</div></div>";
+			d = e.row['DistrictNu'].value;
+			p25 = e.row['pop25over'].value;		
+			
+			var content = "";
+			content += "<div class='row' style='font-weight:bold; font-size:14px; text-align:center; color:#404040'>District "+d+"</div>";
+			content += a + '2010 Population' + b + addCommas(Math.round(e.row['pop_10'].value)) + c;
+			content += a + 'Population >18' + b + addCommas(Math.round(e.row['pop18over'].value)) + c;
+			content += "<div class='row_s'>Race & Ethnicity</div>"
+			content += a + 'Hispanic' + b + addCommas(Math.round(e.row['hisp_10'].value)) + c;
+			content += a + 'Non-Hispanic White' + b + addCommas(Math.round(e.row['nhw_10'].value)) + c;
+			content += a + 'Non-Hispanic African American' + b + addCommas(Math.round(e.row['nhb_10'].value)) + c;
+			content += a + 'Other Race' + b + addCommas(Math.round(e.row['r_other'].value)) + c;
+			content += "<div class='row_s'>Income & Poverty</div>"
+			content += a + 'Per Capita Income' + b + "$" + addCommas(Math.round(e.row['perCapitaI'].value)) + c;
+			content += a + 'Percent of Households in Poverty' + b + Math.round(e.row['HHpoverty'].value) + " %"+ c;
+			content += "<div class='row_s'>Highest Educational Attainment</div>"
+			content += a + 'Percent without High School Diploma' + b +(Math.round((e.row['HS_or_less'].value/p25)*1000))/10 + " %" + c;
+			content += a + 'Percent with High School Diploma' + b +(Math.round((e.row['HS_diploma'].value/p25)*1000))/10 + " %" + c;
+			content += a + 'Percent with Some College' + b +(Math.round((e.row['S_College'].value/p25)*1000))/10 + " %" + c;
+			content += a + 'Percent with Associate\'s Degree' + b +(Math.round((e.row['As_degree'].value/p25)*1000))/10 + " %" + c;
+			content += a + 'Percent with Bachelor\'s Degree' + b +(Math.round((e.row['BS_degree'].value/p25)*1000))/10 + " %" + c;
+			content += a + 'Percent with Master\'s Degree or Greater' + b +(Math.round((e.row['Ms_plus'].value/p25)*1000))/10 + " %" + c;
+
+			var content2 = "<a class='dlb' href='http://www.datadrivendetroit.org/council_districts/maps/overview-d"+d+".pdf' target='_blank'>District "+d+" Overview</a>";
+			content2 += "<a class='dlb' href='http://www.datadrivendetroit.org/council_districts/maps/churches-d"+d+".pdf' target='_blank'>District "+d+" Churches</a>";
+			content2 += "<a class='dlb' href='http://www.datadrivendetroit.org/council_districts/maps/employment-d"+d+".pdf' target='_blank'>District "+d+" Employment</a>";
+			content2 += "<a class='dlb' href='http://www.datadrivendetroit.org/council_districts/maps/politicalcontributions-d"+d+".pdf' target='_blank'>District "+d+" Political Contributions</a>";
+			content2 += "<a class='dlb' href='http://www.datadrivendetroit.org/council_districts/maps/pollinglocations-d"+d+".pdf' target='_blank'>District "+d+" Polling Loctions</a>";			
+			content2 += "<a class='dlb' href='http://www.datadrivendetroit.org/council_districts/maps/race-d"+d+".pdf' target='_blank'>District "+d+" Race</a>";
+			content2 += "<a class='dlb' href='http://www.datadrivendetroit.org/council_districts/maps/schools-parks-d"+d+".pdf' target='_blank'>District "+d+" Schools & Parks with Voter Turnout</a>";
+			content2 += "<a class='dlb' href='http://www.datadrivendetroit.org/council_districts/maps/seniorhousing-d"+d+".pdf' target='_blank'>District "+d+" Senior Housing & Voter Turnout</a>";
+
+			$('#d_info').html(content);
+			$('#d_downloads').html(content2);
+			if($("#c_options").height()>200){expand("info");}
+			if($("#side_panel").css('right')!="240px"){slideopen();}
+
+		});
+		
+      };
+	  
+	function fontsize(){
+		var x = map.getZoom();
+		var y = 10+Math.pow(2,x-7);
+		var fs = ""+ y + "px";
+		return fs;
+	};
+	  
+	function createchartdivs(array){	  
+	for (x in array)
+		{
+		var labelText = "<div class='charts' id='c"+array[x][1]+"'></div>";
+		var Loc = new google.maps.LatLng(array[x][9],array[x][8]);
+		var myOptions = {
+			 content: labelText
+			,boxStyle: {
+			   border: "none"
+			  ,textAlign: "left"
+			  ,fontSize: "10px"
+			  ,color:"white"
+			  ,width:"80px"
+			  ,height:"80px"
+			 }
+			,disableAutoPan: true
+			,pixelOffset: new google.maps.Size(-40,-40)
+			,position: Loc
+			,closeBoxURL: ""
+			,isHidden: false
+			,pane: "floatPane"
+			,enableEventPropagation: true
+			,zindex: 1
+		};
+
+		eval("window.dchart"+array[x][1]+" = new InfoBox(myOptions)");
+		eval("dchart"+array[x][1]+".open(map)");	  
+	}
+	};
+	  
+	function demo_pies(array){
+		$('.charts').css({"display":"block", "opacity":0});
+		ctheme = gtheme;
+		layer.setOptions({styles: ctheme.concat(where)});
+		$('.wedges').remove();
+		var d = [
+				['African American',0,'#A6CEE3'],
+				['Hispanic',0,'#377EB8'],
+				['Non-Hispanic White',0,'#B2DF8A'],
+				['Other',0,'#33A02C']
+				];
+				
+		var note = "<div style='font-size:8px;padding:3px 2px 2px 2px;text-align:center'>Source: 2010 Census</div>";				
+		make_legend(d,note,"\"both\",\"\",\"\"");
+
+		for (x in array){
+			d[0][1] = parseInt(array[x][5]);
+			d[1][1] = parseInt(array[x][6]);
+			d[2][1] = parseInt(array[x][4]);
+			d[3][1] = parseInt(array[x][7]);	
+			// Create and draw the visualization.
+			make_pie(40, d, "c"+array[x][1], true, "\"both\",\"\",\"\"");
+			}
+		$('.charts').animate({opacity:0.8},{ duration: 600, queue: false });	
+	};
+
+	  
+	function edu_pies(array){
+		$('.charts').css({"display":"block", "opacity":0});
+		ctheme = gtheme;
+		layer.setOptions({styles: ctheme.concat(where)});
+		$('.wedges').remove();
+		var d = [
+				['No HS Diploma',0,'#E41A1C'],
+				['HS Diploma',0,'#377EB8'],
+				['Some College',0,'#4DAF4A'],
+				['Associates',0,'#984EA3'],
+				['Bachelor',0,'#FF7F00'],
+				['Masters or Higher',0,'#FFFF33']
+				];
+
+		var note = "<div style='font-size:8px;padding:3px 2px 2px 2px;text-align:center'>Source: ACS 5-Year Estimates</div>";
+		make_legend(d,note,"\"both\",\"\",\"\"");
+
+		for (x in array){
+			d[0][1] = parseInt(array[x][10]);
+			d[1][1] = parseInt(array[x][11]);
+			d[2][1] = parseInt(array[x][12]);
+			d[3][1] = parseInt(array[x][13]);
+			d[4][1] = parseInt(array[x][14]);
+			d[5][1] = parseInt(array[x][15]);
+
+			// Create and draw the visualization.
+			make_pie(40, d, "c"+array[x][1], true, "\"both\",\"\",\"\"");
+		}
+		$('.charts').animate({opacity:0.8},{ duration: 600, queue: false });
+	};
+
+	function income(array){
+		$('.charts').css({"display":"block", "opacity":0});
+		ctheme = gtheme;
+		layer.setOptions({styles: ctheme.concat(where)});
+		$('.wedges').remove();
+		var d = [
+			['Per Capita Income',0,'#0B996E'],
+			];
+		var note = '';
+		make_legend(d,note,"\"amt\",\"$\",\"\"");
+		var average = array_w_average(dists,18,5);
+
+		for (x in array){
+			d[0][1] = parseInt(array[x][18]);
+			// Create and draw the visualization.
+			var v = Math.pow(size_chart(d[0][1],1500,average),1.2);
+			make_pdot(v, d, "c"+array[x][1], true, "\"amt\",\"$\",\"\"");
+		}
+		$('.charts').animate({opacity:0.8},{ duration: 600, queue: false });
+	};
+	
+	function income_bars(array){
+		$('.charts').css({"display":"block", "opacity":0});
+		ctheme = gtheme;
+		layer.setOptions({styles: ctheme.concat(where)});
+		$('.wedges').remove();
+//		var average = Math.round(array_w_average(dists,18,5));
+//		var sizer = 90/ array_max(dists,18);
+		var d = [
+			['District Per Capita Income',0,'#0B996E'],
+			['Citywide Per Capita Income',15261,'#007BE0'],
+			];
+		var note = "<div style='font-size:8px;padding:3px 2px 2px 2px;text-align:center'>1 block = $4,000<br/>Source: ACS 5-Year Estimates</div>";
+		make_legend(d,note,"\"amt\",\"$\",\"\",true");
+
+		for (x in array){
+			d[0][1] = parseInt(array[x][18]);
+			// Create and draw the visualization.
+			make_bbar(d, 4000, 20, 20, "c"+array[x][1], false, "\"amt\",\"$\",\"\",true");
+			}
+		$('.charts').animate({opacity:0.8},{ duration: 600, queue: false });
+	};
+	  
+	function slideclose(){
+		$(".tabs").animate({right:5},{ duration: 600, queue: false });
+		$(".lines").animate({right:3},{ duration: 600, queue: false });		
+		$("#side_panel").animate({width:5},{ duration: 600, queue: false });
+		$("#lbottom").animate({width:5, right:0},{ duration: 600, queue: false });
+		document.getElementById("close").getAttributeNode("onclick").value="slideopen()"
+		document.getElementById("close").getAttributeNode("style").value="background-position:-42px -5px";
+	};
+
+	function slideopen(){
+		$(".tabs").animate({right:240},{ duration: 600, queue: false });
+		$(".lines").animate({right:238},{ duration: 600, queue: false });
+		$("#side_panel").animate({width:240},{ duration: 600, queue: false });
+		$("#lbottom").animate({width:240, right:0},{ duration: 600, queue: false });
+		document.getElementById("close").getAttributeNode("onclick").value="slideclose()"
+		document.getElementById("close").getAttributeNode("style").value="background-position:-6px -5px";
+	};
+
+	function expand(tab){
+		$(".vtabs").animate({height:25},{ duration: 600, queue: false });	
+		$("#c_"+tab).animate({height:371},{ duration: 600, queue: false });	
+	};
+
+	function reset(){
+		ctheme = stheme;
+		layer.setOptions({styles: ctheme.concat(where)});
+		$(".charts").fadeOut("slow");
+		$('#legend').fadeOut("slow")
+	};
+
+	function addCommas(nStr){
+		nStr += '';
+		x = nStr.split('.');
+		x1 = x[0];
+		x2 = x.length > 1 ? '.' + x[1] : '';
+		var rgx = /(\d+)(\d{3})/;
+		while (rgx.test(x1)) {
+			x1 = x1.replace(rgx, '$1' + ',' + '$2');
+			}
+		return x1 + x2;
+	};
+	  
+	function make_legend(d,note,tt){
+		var f = ''
+		for (x in d){
+			f += "<div class='lrow' ><div class='patch' style='background:"+d[x][2]+"'></div><div id='w"+x+"' class='ptitle' onmouseover='tt_in($(\".\"+this.getAttribute(\"id\")),"+tt+")' onmouseout='tt_out()'>"+d[x][0]+"</div></div>"
+			}
+		if (note.length>0){f+= "<div class='lrow'>"+note+"</div>";}
+		$('#linner').html(f);
+		$('#legend').fadeIn("slow");
+		var h = $('#linner').height() + 6;
+		$('#legend').animate({height:h},{ duration: 600, queue: false });
+		};
+	
+	function tt_in(w,h,ap,as,center){
+		for (var i=0; i<w.length; i++) {
+		var row = $(w[i]).data("row");
+		var loc = eval(row[5]+".getPosition()");
+		var tx = Math.round(row[0]); var ty =  Math.round(row[1]);
+		var f = (tx >= 0)?"left":"right";
+		var g = 15;
+		var fill = '<div class="tt_outer" style="background:'+row[7]+';"><div class="tt_inner">';
+		    if (h == 'both' || h == 'pct' ){fill += '<div style="font-size:12px; line-height:16px; height:16px; text-align:center;">'+Math.round(row[4]*1000)/10+"%</div>"; g=g+16;}
+			if (h == 'both' || h == 'amt' ){fill += "<div style='font-size:9px; line-height:14px; height:14px; text-align:center;'>"+ap+addCommas(row[3])+as+'</div>'; g=g+14;}
+			fill +=	'</div></div>';
+		var ta = (center==true)?"center":f;
+		var tt_opt = {
+				 content: fill
+				,boxStyle: {
+				   border: "none"
+				  ,color:"white"
+				  ,font:"arial"
+				  ,width:"60px"
+				  ,height:g+"px"
+				  ,textAlign: ta
+				}
+				,disableAutoPan: true
+				,pixelOffset: new google.maps.Size((center==true)?-30+tx:(tx >= 0)?tx:tx-60,ty)
+				,position: loc
+				,closeBoxURL: ""
+				,isHidden: false
+				,pane: "floatPane"
+				,enableEventPropagation: true
+				,zindex: 100
+				,alignBottom: (ty > 0)?false:true
+			};
+		
+		q = "tt"+i;		
+		eval('window.'+q+' = new InfoBox(tt_opt);'); 
+		eval(q+".open(map);");
+		eval("tooltips.push('tt"+i+"')");
+		}
+	};
+
+	function tt_out() {
+		for (t in tooltips){ eval(tooltips[t]+".close()");  }
+		tooltips = [];	
+	};
+	function maket(){
+		ctheme = ttheme;
+		layer.setOptions({styles: ctheme.concat(where)});
+		$(".charts").fadeOut("slow");
+		$('#legend').fadeOut("slow")
+	};		
+    </script>
+  </head>
+  <body onload="initialize()">
+	<div id="map_canvas"></div>
+	<div class="lines" style="top:0px; height:5px"></div>
+	<a id="close" class="tabs" onclick="slideclose()" style="background-position:-6px -5px"></a>
+	<div class="lines" style="top:32px; height:418px"></div>
+	<div class="lines" id="lbottom" style="top: 447px; height: 3px; right:0px; box-shadow: gray 0px 2px 2px; width: 240px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(92, 92, 92);"></div>
+	<div id="legend"><div id="linner"></div></div>
+	<div id="side_panel">
+		<div class="vtabs active" id="c_info" style="height:400px">
+			<a id="info" class="accordion" onclick="expand(this.id)">District Information</a>
+			<div class="vcontent" id="d_info">
+				<p id="instruct" class="instruct">Select a council district to see additional information</p>
+			</div>
+		</div>
+		
+	</div>
+
+	</div>
+	<script>function dothis(response){dists=response.rows};</script>
+	<script src="https://www.googleapis.com/fusiontables/v1/query?sql=SELECT+ROWID%2C+DistrictNu%2C+lx%2C+ly%2C+nhw_10%2C+nhb_10%2C+hisp_10%2C+r_other%2C+x%2C+y%2C+HS_or_less%2C+HS_diploma%2C+S_College%2C+As_degree%2C+BS_degree%2C+Ms_plus%2C+pop25over%2C+pop_10%2C+perCapitaI+FROM+1RICAS_EEVyVNDCx-e3UqQ2bwvVRzK0zBHt0in7k&key=AIzaSyC6cr6E2-ZfezIgeYzYL9Gs99Vx99du2YE&callback=dothis"></script>
+		
+  </body>
+</html>

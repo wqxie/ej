@@ -10,7 +10,16 @@
 	<script type="text/javascript" src="js/jquery.fancybox.pack.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$("a.fancybox").fancybox();
+			$("a.fancybox").fancybox({
+                    autoSize: false,
+                    autoDimensions: false,
+                    width: 800,
+                    height: 500,
+                    fitToView: false,
+                    padding: 0,
+                    href: $(this).attr('href'),
+                    type: 'iframe'
+                });
 		});
 	</script>
 </head>

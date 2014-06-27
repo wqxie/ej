@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <title>Google Fusion Tables API Example</title>
+  </head>
+  <body>
+    <div id="content"></div>
+    <script>
+	var data;
+    function handler(response) {
+		data = response;
+      for (var i = 0; i < response.totalItems; i++) {
+       var item = response.items[i];
+       document.getElementById("content").innerHTML += "<br>" + item.name;
+      }
+	  alert("hello")
+    }
+    </script>
+    <script src="https://www.googleapis.com/fusiontables/v1/tables/1y85IFbTvC4Jef0abuv7HBnWD3luMK-7Yl_WbLw8/templates?callback=handler&key=AIzaSyC6cr6E2-ZfezIgeYzYL9Gs99Vx99du2YE"></script>
+  </body>
+</html>

@@ -1,0 +1,511 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=yes" /> 
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+	<title>Detroit City Council Districts</title>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+	<script src="https://datadrivendetroit.org/council_districts/infobox_packed.js"></script>
+	<script type="text/javascript" src="charts.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+	<script src="cpolygons.js"></script>
+	<style>
+		a{cursor:pointer;}
+		body, html {height:100%; width:100%; margin:0px; padding:0px; overflow:hidden; font-family: Geneva, 'Lucida Sans', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;}
+		
+		#map_canvas {height:100%; position:relative; margin-right:40px}
+		#controls{height:100%; width:48px; position:absolute; z-index:2; right:0px; top:0px; background-image:url(images/sbar.png);}
+		
+		.title{display:none; position:absolute; height:26px; z-index:1; right:50px; background:black; background:rgb(45,45,45); padding:0px 8px; line-height:26px; color:white; font-weight:bold; text-transform:uppercase; font-size:11px; margin:7px 0px; border-radius:5px; white-space:nowrap;}
+		.cbutton{height:40px; width:40px; margin:0px 0px 0px 8px; background-repeat:no-repeat; background-image:url(images/sprites.png); position:relative; cursor:pointer; display:block;}
+		.cbutton:hover{background-color:#fa6600;}
+		.cbutton:hover .title{display:block;}
+		
+		#logo{background-position:-203px -40px !important;}
+		#logo:hover{background-position:-203px -40px !important;}
+
+		#info{background-position:-1px 0px}
+		#options{background-position:-40px 0px;}
+		#charts{background-position:-80px 0px;}
+		#legend{background-position:-120px 0px;}
+		#help{background-position:-163px 0px;}
+		
+		#info.cbutton.active{background-position:-1px -41px;}
+		#options.cbutton.active{background-position:-40px -41px;}
+		#charts.cbutton.active{background-position:-80px -41px;}
+		#legend.cbutton.active{background-position:-120px -41px;}
+		#help.cbutton.active{background-position:-163px -41px;}
+		
+		/*Slider Interior*/
+		#slider{position:absolute; height:100%; width:260px; right:-230px; top:-25px; background-color:whitesmoke; box-shadow:-1px 1px 9px black; border-left:1px solid gray; border-bottom:1px solid gray; border-bottom-left-radius:15px; background-color:rgba(245,245,245,0.8);}
+		#close{position:absolute; right:44px; top:25px; height:30px; width:30px; cursor:pointer; background-image:url(images/sprites.png); background-position:-254px -5px; background-repeat:no-repeat;}		
+		#close:hover{background-position:-254px -45px;}
+		.ctitle{position:absolute; top:25px; left:5px; width:160px; height:30px; line-height:30px; }
+		#scroll{overflow-x:hidden; overflow-y:auto; position:absolute; left:5px; top:55px; width:240px; height:300px;}
+		.content{width:216px}
+		
+		/*Data Table*/
+		.row{float:left; width:100%; font-size:11px; border-bottom:1px solid #C7C7C7; padding:6px 0px}
+		.row_t{float:left; width:120px; padding:0px 8px; text-align:right; color:gray;}
+		.row_i{float:left;}
+		.row_s{float:left; width:100%; padding:4px 0px; background:#DFDFDF; text-align:center; font-size:10px; color:#5C5C5C; border-bottom:1px solid #C7C7C7;}
+		
+		.charts{opacity:0.8; height:inherit; width:inherit}
+		.button{width:200px !important; margin:5px auto; border-radius:6px; border:1px solid gray; text-align:center; line-height:14px !important; 	padding:6px 6px !important; height:auto !important; 
+			background: #279ee8 !important; /* Old browsers */
+			background: -moz-linear-gradient(top,  #279ee8 0%, #003FC2 100%)!important; /* FF3.6+ */
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#279ee8), color-stop(100%,#003FC2))!important; /* Chrome,Safari4+ */
+			background: -webkit-linear-gradient(top,  #279ee8 0%,#003FC2 100%)!important; /* Chrome10+,Safari5.1+ */
+			background: -o-linear-gradient(top,  #279ee8 0%,#003FC2 100%)!important; /* Opera 11.10+ */
+			background: -ms-linear-gradient(top,  #279ee8 0%,#003FC2 100%)!important; /* IE10+ */
+			background: linear-gradient(to bottom,  #279ee8 0%,#003FC2 100%)!important; /* W3C */
+			box-shadow: inset -1px 1px 2px rgb(190, 224, 255), inset 1px -1px 2px rgb(0, 68, 141), inset 0px 0px 2px whitesmoke;
+		}
+		.button:hover{
+			background: #003FC2 !important; /* Old browsers */
+			box-shadow: inset -1px 1px 2px rgb(0,42,87), inset 1px -1px 2px white;
+		}
+
+		#mdownload{width:175px !important; text-decoration:none;}
+		
+		#legend{position:absolute; left:8px; bottom:50px; z-index:3; width:104px; border:1px solid rgb(70, 70, 70); background:white; background:rgba(255,255,255, 0.8); border-radius:3px; box-shadow:0px 2px 5px gray; display:none; overflow:hidden;}
+		.lrow{width:100%; float:left;}
+		.patch{width:12px; height:12px; float:left; margin-left:4px; margin-top:3px; opacity:0.8; border-radius:6px;}
+		.ptitle{float:left; font-size:10px; margin-left:5px; width:70px; padding:2px; cursor:default;}
+		.ptitle:hover{background:gray; color:white;}
+		#linner{float:left; width:98px; margin:3px;}
+		
+		.instruct{font-size:20pt; color:gray; padding:6px; margin:0px}
+		
+		.tt_outer{padding:5px; opacity:0.8; box-shadow:1px 1px 2px gray; display:inline-block; text-align:center;}
+		.tt_inner{text-align:center; padding:3px 6px 2px; background:#2C2C2C; color:white; background: rgba(0, 0, 0, 0.6); display:inline-block; vertical-align:top;}
+		.wedges{cursor:default;}
+		.gmnoprint a {padding-right:10px !important;}
+	</style>
+    <script>
+	var ibLabel;
+	var tooltip;
+	var layer;
+	var dists;
+	var ctheme = [];
+	var stheme = [];
+	var gtheme = [{polygonOptions: {fillColor:"#D6D6D6"}}];
+	var ttheme = [{polygonOptions: {strokeOpacity:0.1, fillOpacity:0.2}}];
+	var where = [];
+	var tooltips = [];
+	var layer;
+	var slider = 'closed';
+
+	$(document).ready(function() {		
+		$("#scroll").bind('mousewheel DOMMouseScroll', function(event) {
+				event.preventDefault()
+				var a = event.originalEvent.wheelDelta;
+				var b = event.originalEvent.detail;
+				var c = "#" + this.id + " > .sci";
+				var d = parseFloat($(c).css("margin-top"));
+
+				if (a > 0){
+					$(this).scrollTop($(this).scrollTop()-a);
+					}
+				else if (a < 0){
+					$(this).scrollTop($(this).scrollTop()-a);
+					}
+				else if (b > 0){
+					$(this).scrollTop($(this).scrollTop()+40);
+					}
+				else if	(b < 0){
+					$(this).scrollTop($(this).scrollTop()-40);
+					}
+				else {}	
+			});
+	
+		sResize();
+		$(window).resize(function(){
+			sResize()
+			});
+		$(".ctitle,.content").hide();
+	});
+	
+	function sResize(){
+		h = document.getElementById("map_canvas").offsetHeight - 60;
+		$("#scroll").css({'height':h+'px'});
+		}
+	
+    function initialize() {
+
+		bounds = new google.maps.LatLngBounds(new google.maps.LatLng(42.252410, -83.291576), new google.maps.LatLng(42.450315, -82.913235));
+		center = new google.maps.LatLng(42.35144,-83.1024);
+
+        map = new google.maps.Map(document.getElementById('map_canvas'), {
+			disableDefaultUI: false,
+			panControl:false,
+			streetViewControl:false,
+			zoomControl:true,
+			zoomControlOptions:{style: google.maps.ZoomControlStyle.SMALL, position: google.maps.ControlPosition.LEFT_TOP},
+			mapTypeId: google.maps.MapTypeId.ROAD,
+			mapTypeControl: true,
+			mapTypeControlOptions: {
+			  style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+			  position: google.maps.ControlPosition.TOP_LEFT
+			},	
+			minZoom:11,
+			maxZoom:20
+        });
+
+		var dstyle = [
+					  {
+						"stylers": [
+						  { "saturation": -100 },
+						  { "weight": 0.5 }
+						]
+					  },{
+						"featureType": "administrative",
+						"stylers": [
+						  { "visibility": "on" },
+						  { "gamma": 2.54 }
+						]
+					  },{
+						"featureType": "landscape",
+						"elementType": "geometry",
+						"stylers": [
+						  { "color": "#ffffff" }
+						]
+					  },{
+						"featureType": "water",
+						"stylers": [
+						  { "color": "#00a0ff" },
+						  { "saturation": -23 },
+						  { "lightness": 78 }
+						]
+					  },{
+						"featureType": "poi.park",
+						"elementType": "geometry.fill",
+						"stylers": [
+						  { "color": "#E0E6D1" }
+						]
+					  }
+					]; 
+					
+		map.setOptions({styles:dstyle});
+
+		var styledMapType = new google.maps.StyledMapType(dstyle, {map:map, name:'Styled Map'});
+
+		map.mapTypes.set('map-style', styledMapType);
+		map.setMapTypeId('map-style');
+
+		map.fitBounds(bounds);
+//		map.setCenter(center);
+//		map.setZoom(11);
+		
+		try {
+			for (x in dists)
+			{
+			var labelText = "<div class='labels' id='d"+dists[x][1]+"' style='background-color:"+cdistricts[x].color+"'>" + dists[x][1] + "</div>";
+			var Loc = new google.maps.LatLng(dists[x][3],dists[x][2]);
+			var myOptions = {
+				 content: labelText
+				,boxStyle: {
+				   border: "none"
+				  ,textAlign: "left"
+				  ,fontSize: "20px"
+				  ,color:"white"
+				  ,width:"50px"
+				  ,height:"50px"
+				 }
+				,disableAutoPan: true
+				,pixelOffset: new google.maps.Size(5,0)
+				,position: Loc
+				,closeBoxURL: ""
+				,isHidden: false
+				,pane: "floatPane"
+				,enableEventPropagation: true
+				,zindex: 1
+			};
+			eval("window.ibLabel"+x+" = new InfoBox(myOptions)");
+			eval("ibLabel"+x+".open(map)");
+			};
+			createchartdivs(dists);	
+			}
+		catch(err){ alert(err); $('#o_buttons').html('<p class="instruct">Unfortunately, your browser does not support these options.</p>');}
+	
+	var offset = google.maps.StrokePosition.INSIDE;
+
+	for (x in cdistricts){
+		var path = [];
+		var points = cdistricts[x].Path;
+		for (y in points){path.push(eval("new google.maps.LatLng("+points[y]+")"));}
+		eval("window.marker"+x+" = new google.maps.Polygon({paths:[path], map:map, zIndex:1, strokeWeight:4, fillOpacity:0.3, fillColor:'"+cdistricts[x].color+"', strokeOpacity:0.6, strokeColor:'"+cdistricts[x].color+"',strokePosition:offset})");
+		};	
+    };
+	  
+	function fontsize(){
+		var x = map.getZoom();
+		var y = 10+Math.pow(2,x-7);
+		var fs = ""+ y + "px";
+		return fs;
+	};
+	  
+	function createchartdivs(array){	  
+	for (x in array)
+		{
+		var labelText = "<div class='charts' id='c"+array[x][1]+"'></div>";
+		var Loc = new google.maps.LatLng(array[x][9],array[x][8]);
+		var myOptions = {
+			 content: labelText
+			,boxStyle: {
+			   border: "none"
+			  ,textAlign: "left"
+			  ,fontSize: fontsize()
+			  ,color:"white"
+			  ,width:"80px"
+			  ,height:"80px"
+			 }
+			,disableAutoPan: true
+			,pixelOffset: new google.maps.Size(-40,-40)
+			,position: Loc
+			,closeBoxURL: ""
+			,isHidden: false
+			,pane: "floatPane"
+			,enableEventPropagation: true
+			,zindex: 1
+		};
+		eval("window.dchart"+array[x][1]+" = new InfoBox(myOptions)");
+		eval("dchart"+array[x][1]+".open(map)");	  
+	}
+	};
+	  
+	function demo_pies(array){
+		$('.charts').css({"display":"block", "opacity":0});
+		ctheme = gtheme;
+		layer.setOptions({styles: ctheme.concat(where)});
+		$('.wedges').remove();
+		var d = [
+				['African American',0,'#A6CEE3'],
+				['Hispanic',0,'#377EB8'],
+				['Non-Hispanic White',0,'#B2DF8A'],
+				['Other',0,'#33A02C']
+				];
+				
+		var note = "<div style='font-size:8px;padding:3px 2px 2px 2px;text-align:center'>Source: 2010 Census</div>";				
+		make_legend(d,note,"\"both\",\"\",\"\"");
+
+		for (x in array){
+			d[0][1] = parseInt(array[x][5]);
+			d[1][1] = parseInt(array[x][6]);
+			d[2][1] = parseInt(array[x][4]);
+			d[3][1] = parseInt(array[x][7]);	
+			// Create and draw the visualization.
+			make_pie(40, d, "c"+array[x][1], true, "\"both\",\"\",\"\"");
+			}
+		$('.charts').animate({opacity:0.8},{ duration: 600, queue: false });	
+	};
+
+	function edu_pies(array){
+		$('.charts').css({"display":"block", "opacity":0});
+		ctheme = gtheme;
+		layer.setOptions({styles: ctheme.concat(where)});
+		$('.wedges').remove();
+		var d = [
+				['No HS Diploma',0,'#E41A1C'],
+				['HS Diploma',0,'#377EB8'],
+				['Some College',0,'#4DAF4A'],
+				['Associates',0,'#984EA3'],
+				['Bachelor',0,'#FF7F00'],
+				['Masters or Higher',0,'#FFFF33']
+				];
+
+		var note = "<div style='font-size:8px;padding:3px 2px 2px 2px;text-align:center'>Source: ACS 5-Year Estimates</div>";
+		make_legend(d,note,"\"both\",\"\",\"\"");
+
+		for (x in array){
+			d[0][1] = parseInt(array[x][10]);
+			d[1][1] = parseInt(array[x][11]);
+			d[2][1] = parseInt(array[x][12]);
+			d[3][1] = parseInt(array[x][13]);
+			d[4][1] = parseInt(array[x][14]);
+			d[5][1] = parseInt(array[x][15]);
+
+			// Create and draw the visualization.
+			make_pie(40, d, "c"+array[x][1], true, "\"both\",\"\",\"\"");
+		}
+		$('.charts').animate({opacity:0.8},{ duration: 600, queue: false });
+	};
+
+	function income(array){
+		$('.charts').css({"display":"block", "opacity":0});
+		ctheme = gtheme;
+		layer.setOptions({styles: ctheme.concat(where)});
+		$('.wedges').remove();
+		var d = [
+			['Per Capita Income',0,'#0B996E'],
+			];
+		var note = '';
+		make_legend(d,note,"\"amt\",\"$\",\"\"");
+		var average = array_w_average(dists,18,5);
+
+		for (x in array){
+			d[0][1] = parseInt(array[x][18]);
+			// Create and draw the visualization.
+			var v = Math.pow(size_chart(d[0][1],1500,average),1.2);
+			make_pdot(v, d, "c"+array[x][1], true, "\"amt\",\"$\",\"\"");
+		}
+		$('.charts').animate({opacity:0.8},{ duration: 600, queue: false });
+	};
+	
+	function income_bars(array){
+		$('.charts').css({"display":"block", "opacity":0});
+		ctheme = gtheme;
+		layer.setOptions({styles: ctheme.concat(where)});
+		$('.wedges').remove();
+//		var average = Math.round(array_w_average(dists,18,5));
+//		var sizer = 90/ array_max(dists,18);
+		var d = [
+			['District Per Capita Income',0,'#0B996E'],
+			['Citywide Per Capita Income',19676,'#007BE0'],
+			];
+		var note = "<div style='font-size:8px;padding:3px 2px 2px 2px;text-align:center'>1 block = $5,000<br/>Source: ACS 5-Year Estimates</div>";
+		make_legend(d,note,"\"amt\",\"$\",\"\",true");
+
+		for (x in array){
+			d[0][1] = parseInt(array[x][18]);
+			// Create and draw the visualization.
+			make_bbar(d, 5000, 17, 17, "c"+array[x][1], false, "\"amt\",\"$\",\"\",true");
+			}
+		$('.charts').animate({opacity:0.8},{ duration: 600, queue: false });
+	};
+
+	function reset(){
+		ctheme = stheme;
+		layer.setOptions({styles: ctheme.concat(where)});
+		$(".charts").fadeOut("slow");
+		$('#legend').fadeOut("slow")
+	};
+
+	function addCommas(nStr){
+		nStr += '';
+		x = nStr.split('.');
+		x1 = x[0];
+		x2 = x.length > 1 ? '.' + x[1] : '';
+		var rgx = /(\d+)(\d{3})/;
+		while (rgx.test(x1)) {
+			x1 = x1.replace(rgx, '$1' + ',' + '$2');
+			}
+		return x1 + x2;
+	};
+	  
+	function make_legend(d,note,tt){
+		var f = ''
+		for (x in d){
+			f += "<div class='lrow' ><div class='patch' style='background:"+d[x][2]+"'></div><div id='w"+x+"' class='ptitle' onmouseover='tt_in($(\".\"+this.getAttribute(\"id\")),"+tt+")' onmouseout='tt_out()'>"+d[x][0]+"</div></div>"
+			}
+		if (note.length>0){f+= "<div class='lrow'>"+note+"</div>";}
+		$('#linner').html(f);
+		$('#legend').fadeIn("slow");
+		var h = $('#linner').height() + 6;
+		$('#legend').animate({height:h},{ duration: 600, queue: false });
+		};
+	
+	function tt_in(w,h,ap,as,center){
+		for (var i=0; i<w.length; i++) {
+		var row = $(w[i]).data("row");
+		var loc = eval(row[5]+".getPosition()");
+		var tx = Math.round(row[0]); var ty =  Math.round(row[1]);
+		var f = (tx >= 0)?"left":"right";
+		var g = 15;
+		var fill = '<div class="tt_outer" style="background:'+row[7]+';"><div class="tt_inner">';
+		    if (h == 'both' || h == 'pct' ){fill += '<div style="font-size:12px; line-height:16px; height:16px; text-align:center;">'+Math.round(row[4]*1000)/10+"%</div>"; g=g+16;}
+			if (h == 'both' || h == 'amt' ){fill += "<div style='font-size:9px; line-height:14px; height:14px; text-align:center;'>"+ap+addCommas(row[3])+as+'</div>'; g=g+14;}
+			fill +=	'</div></div>';
+		var ta = (center==true)?"center":f;
+		var tt_opt = {
+				 content: fill
+				,boxStyle: {
+				   border: "none"
+				  ,color:"white"
+				  ,font:"arial"
+				  ,width:"60px"
+				  ,height:g+"px"
+				  ,textAlign: ta
+				}
+				,disableAutoPan: true
+				,pixelOffset: new google.maps.Size((center==true)?-30+tx:(tx >= 0)?tx:tx-60,ty)
+				,position: loc
+				,closeBoxURL: ""
+				,isHidden: false
+				,pane: "floatPane"
+				,enableEventPropagation: true
+				,zindex: 100
+				,alignBottom: (ty > 0)?false:true
+			};
+		
+		q = "tt"+i;		
+		eval('window.'+q+' = new InfoBox(tt_opt);'); 
+		eval(q+".open(map);");
+		eval("tooltips.push('tt"+i+"')");
+		}
+	};
+
+	function tt_out() {
+		for (t in tooltips){ eval(tooltips[t]+".close()");  }
+		tooltips = [];	
+	};
+
+	function maket(){
+		ctheme = ttheme;
+		layer.setOptions({styles: ctheme.concat(where)});	
+	};
+
+	function expand(a,b){
+		$(".cbutton").removeClass("active");
+		$(a).addClass("active");
+		if(slider != "open"){$("#slider").animate({right:0},{duration:600}); slider='open';}
+		if($("#T"+b).css('display') != 'block'){
+			$(".ctitle, .content").hide();
+			$("#T"+b+", #C"+b).fadeIn('fast');
+			}
+	};
+
+	function sClose(){
+		$(".cbutton").removeClass('active');
+		$("#slider").animate({right:-230},{duration:600}); slider='closed';		
+	}
+    </script>
+  </head>
+  <body onload="initialize()">
+	<div id="map_canvas"></div>
+	<div id="controls">
+		<a id="logo" class="cbutton" href="http://www.datadrivendetroit.org" target="_blank">
+			<div class="title">Data Driven Detroit</div>
+		</a>
+		<div id="info" class="cbutton" onclick="expand(this,'info')">
+			<div class="title">Info</div>
+		</div>
+		<div id="options" class="cbutton" onclick="expand(this,'options')">
+			<div class="title">Options</div>
+		</div>
+		<div id="charts" class="cbutton" onclick="expand(this,'charts')">
+			<div class="title">Charts</div>
+		</div>
+<!--	<div id="legend" class="cbutton" !important">
+			<div class="title">Legend</div>
+		</div> -->
+		<div id="help" class="cbutton" onclick="expand(this,'help')">
+			<div class="title">Help</div>
+		</div>
+	</div>
+	<div id="slider">
+		<div id="close" onclick="sClose()"></div>	
+		<div class="ctitle" id="Tinfo">Info</div>
+		<div class="ctitle" id="Toptions">Options</div>		
+		<div class="ctitle" id="Tcharts">Charts</div>
+		<div class="ctitle" id="Thelp">Help</div>
+		<div id="scroll">
+			<div class="content" id="Cinfo">info</div>
+			<div class="content" id="Coptions">options</div>
+			<div class="content" id="Ccharts">charts</div>
+			<div class="content" id="Chelp">help</div>			
+		</div> 
+	</div>
+  </body>
+</html>

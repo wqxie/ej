@@ -9,7 +9,7 @@ require_once "header.php";
 		<p>Use this interactive tool to explore the new districts!</p></p>
 
 	</div>
-	<div class="image-row map"><a class="fancybox fancybox.iframe" href="http://www.datadrivendetroit.org/council_districts/cdistricts.html"><img class="example-image" src="img/map.png" alt="image-1" /></a></div>
+	<div class="image-row map"><a class="fancybox fancybox.iframe" href="council_districts/cdistricts.html"><img class="example-image" src="img/map.png" alt="image-1" /></a></div>
 	<div class="filter-block">
 		<div class="filter-head"><p>Variables</p></div>
 		<div class="filter-content">
