@@ -366,6 +366,7 @@ function numberFormat(num){
 
 function drawAreaChart(count, filter_data, c1, c2, category, variable, unit, width_ratio){
 	d3.select("#chart"+"1"+count).selectAll("svg").remove();
+	d3.select("#chart"+"2"+count).selectAll("svg").remove();
 	var svg1 = d3.select("#chart"+"1"+count).append("svg").attr("width",255).attr("height",150);
 	max_width = Math.max(filter_data[0].districts[c1],filter_data[0].districts[c2],filter_data[1].districts[c1],filter_data[1].districts[c2]);
 	width = 205;
@@ -388,7 +389,10 @@ function drawAreaChart(count, filter_data, c1, c2, category, variable, unit, wid
 	var yAxis = d3.svg.axis()
 	    .scale(y).ticks(3)
 	    .orient("left");
-
+	var area0 = d3.svg.area()
+		.x(function(d) { return x(d.year); })
+	    .y0(height)
+	    .y1(function(d) { return y(0); });
 	var area1 = d3.svg.area()
 	    .x(function(d) { return x(d.year); })
 	    .y0(height)
@@ -403,6 +407,9 @@ function drawAreaChart(count, filter_data, c1, c2, category, variable, unit, wid
 	  svg3.append("path")
 	      .datum(filter_data)
 	      .attr("class", "area")
+	      .attr("d",area0)
+	      .transition()
+	      .duration(1000)
 	      .attr("d", area1);
 
 	  svg3.append("g")
@@ -414,6 +421,7 @@ function drawAreaChart(count, filter_data, c1, c2, category, variable, unit, wid
 	      .attr("class", "y axis")
 	      .call(yAxis);
 
+
 	 var svg2 = d3.select("#chart"+"2"+count).append("svg").attr("width",255).attr("height",150);
 	 var svg4 = svg2.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 	 var area2 = d3.svg.area()
@@ -423,6 +431,9 @@ function drawAreaChart(count, filter_data, c1, c2, category, variable, unit, wid
 	svg4.append("path")
 	      .datum(filter_data)
 	      .attr("class", "area")
+	      .attr("d",area0)
+	      .transition()
+	      .duration(1000)
 	      .attr("d", area2);
 
 	svg4.append("g")
@@ -434,6 +445,16 @@ function drawAreaChart(count, filter_data, c1, c2, category, variable, unit, wid
 	      .attr("class", "y axis")
 	      .call(yAxis);
 
+	var info1 = "<p>Category : " + category + "</p><p>Variable :" +  variable + "</p><p>Unit : " + unit
+						+ "</p><p>Year" + filter_data[0].year + " : " + numberFormat(filter_data[0].districts[c1]) +  "</p><p>Year" + filter_data[1].year + " : " + numberFormat(filter_data[1].districts[c1]);
+			d3.select("#intro"+"1"+count).selectAll("p").remove();
+			d3.select("#intro"+"1"+count).html(info1);
+			d3.select("#intro"+"1"+count).style("border-bottom","1px solid #fbd775");
+	var info2 = "<p>Category : " + category + "</p><p>Variable :" +  variable + "</p><p>Unit : " + unit
+						+ "</p><p>Year" + filter_data[0].year + " : " + numberFormat(filter_data[0].districts[c2]) +  "</p><p>Year" + filter_data[1].year + " : " + numberFormat(filter_data[1].districts[c2]);
+			d3.select("#intro"+"2"+count).selectAll("p").remove();
+			d3.select("#intro"+"2"+count).html(info2);
+			d3.select("#intro"+"2"+count).style("border-bottom","1px solid #fbd775");
 
 }
 
