@@ -106,6 +106,7 @@ header .nav{
 	float: left;
 	font-size: 13px;
 	width: 300px;
+	padding-left: 20px;
 	clear: both;
 }
 .filter-option [type=radio]{
@@ -271,4 +272,35 @@ td{
 	margin: 20px;
 	width: 960px;
 	font-size: 12px;
+}
+
+input[type=checkbox].css-checkbox {
+	display:none;
+}
+
+input[type=checkbox].css-checkbox + label.css-label {
+	padding-left:26px;
+	margin-bottom: 10px;
+	height:19px; 
+	display:inline-block;
+	line-height:19px;
+	background-repeat:no-repeat;
+	background-position: 0 0;
+	font-size:13px;
+	vertical-align:middle;
+	cursor:pointer;
+
+}
+
+input[type=checkbox].css-checkbox:checked + label.css-label {
+	background-position: 0 -19px;
+}
+label.css-label {
+	background-image:url(http://csscheckbox.com/checkboxes/u/csscheckbox_fd2a3883d9fd900cde141141cae5b621.png);
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }

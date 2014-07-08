@@ -15,6 +15,10 @@ require_once "header.php";
 		<div class="filter-content">
 			<div class="filter-title">Air</div>
 			<div class="filter-option">
+				<input id="filter1" class="css-checkbox" type="checkbox" />
+				<label for="filter1" name="filter_1" class="css-label">GHG Emissions by TRI Facilities</label>
+				<input id="filter2" class="css-checkbox" type="checkbox" />
+				<label for="filter2" name="filter_2" class="css-label">Total Air Releases</label>
 				<input type="radio" name="air" value = "1"><p>GHG Emissions by TRI Facilities</p></input><br />
 				<input type="radio" name="air" value = "2"><p>Total Air Releases</p></input><br />
 			</div>
@@ -23,6 +27,8 @@ require_once "header.php";
 				<input type="radio" name="health" value = "1"><p>Elevated Blood Lead Level(EBLL)</p></input><br />
 				<input type="radio" name="health" value = "2"><p>Infant Mortality Rate</p></input><br />
 			</div>
+			<input id="demo_box_1" class="css-checkbox" type="checkbox" />
+			<label for="demo_box_1" name="demo_lbl_1" class="css-label">Option #1</label>
 			<div class="filter-title">Land</div>
 			<div class="filter-option">
 				<input type="radio" name="land" value = "1"><p>Cumulative Trees Planted</p></input><br />
@@ -74,6 +80,14 @@ require_once "header.php";
 					<div class="chart-intro" id="intro14"></div>
 					<div id="chart15" class="chart"></div>
 					<div class="chart-intro" id="intro15"></div>
+					<div id="chart16" class="chart"></div>
+					<div class="chart-intro" id="intro16"></div>
+					<div id="chart17" class="chart"></div>
+					<div class="chart-intro" id="intro17"></div>
+					<div id="chart18" class="chart"></div>
+					<div class="chart-intro" id="intro18"></div>
+					<div id="chart19" class="chart"></div>
+					<div class="chart-intro" id="intro19"></div>
 	       		</div>
 	       		<div class="half-tab">
 	       			<div class="styled-select">
@@ -97,6 +111,14 @@ require_once "header.php";
 					<div class="chart-intro" id = "intro24"></div>
 					<div id="chart25" class="chart"></div>
 					<div class="chart-intro" id="intro25"></div>
+					<div id="chart26" class="chart"></div>
+					<div class="chart-intro" id="intro26"></div>
+					<div id="chart27" class="chart"></div>
+					<div class="chart-intro" id="intro27"></div>
+					<div id="chart28" class="chart"></div>
+					<div class="chart-intro" id="intro28"></div>
+					<div id="chart29" class="chart"></div>
+					<div class="chart-intro" id="intro29"></div>
 	       		</div>
 	       </div> 
 	   </div>

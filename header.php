@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>EJ dashboard</title>
+	<title>Environmental Justice Dashboard</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 	<script src="js/d3.v3.min.js" charset="utf-8"></script>
@@ -27,6 +27,6 @@
 	<header>
 		<div class="nav">
 			<img src="img/logo.png" class="logo"/>
-			<span class="title">EJ Dashboard</span>
+			<span class="title">Environmental Justice Dashboard</span>
 		</div>
 	</header>
