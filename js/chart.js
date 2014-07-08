@@ -92,51 +92,9 @@ function drawChart(air,health,land,neighbor,trans,waste,c1,c2){
 			count++;
 		};
 		if (trans) {
-			d3.select("#chart"+"1"+count).selectAll("svg").remove();
-			svg1 = d3.select("#chart"+"1"+count).append("svg").attr("width",255).attr("height",70);
+			
 			trans_data = data.trans[trans-1].years;
-			max_width = Math.max(trans_data[0].districts[c1],trans_data[0].districts[c2],trans_data[1].districts[c1],trans_data[1].districts[c2]);
-			svg1.append("text").text(trans_data[0].year).attr("x",0).attr("y",20).attr("fill","#f8bc19");
-			svg1.append("rect").attr("width",trans_data[0].districts[c1]/max_width*width_ratio).attr("height",20).attr("x",60).attr("y",5).attr("fill","#f8bc19");
-			svg1.append("text").text(trans_data[0].districts[c1]).attr("x",70).attr("y",20).attr("fill","black");
-			svg1.append("text").text(trans_data[1].year).attr("x",0).attr("y",60).attr("fill","#fbd775");
-			svg1.append("rect").attr("width",trans_data[1].districts[c1]/max_width*width_ratio).attr("height",20).attr("x",60).attr("y",45).attr("fill","#fbd775");
-			svg1.append("text").text(trans_data[1].districts[c1]).attr("x",70).attr("y",60).attr("fill","black");
-			var info1 = "<p>Category : " + "Transportation" + "</p><p>Variable :" +  data.trans[trans-1].variable + "</p><p>Unit : " + data.trans[trans-1].unit 
-						+ "</p><p>Year" + trans_data[0].year + " : " + trans_data[0].districts[c1] +  "</p><p>Year" + trans_data[1].year + " : " + trans_data[1].districts[c1];
-			d3.select("#intro"+"1"+count).selectAll("p").remove();
-			d3.select("#intro"+"1"+count).html(info1);
-			d3.select("#intro"+"1"+count).style("border-bottom","1px solid #fbd775");
-
-			d3.select("#chart"+"2"+count).selectAll("svg").remove();
-			svg2 = d3.select("#chart"+"2"+count).append("svg").attr("width",255).attr("height",70);
-			svg2.append("text").text(trans_data[0].year).attr("x",0).attr("y",20).attr("fill","#f8bc19");
-			svg2.append("rect").attr("width",trans_data[0].districts[c2]/max_width*width_ratio).attr("height",20).attr("x",60).attr("y",5).attr("fill","#f8bc19");
-			svg2.append("text").text(trans_data[0].districts[c2]).attr("x",70).attr("y",20).attr("fill","black");
-			svg2.append("text").text(trans_data[1].year).attr("x",0).attr("y",60).attr("fill","#fbd775");
-			svg2.append("rect").attr("width",trans_data[1].districts[c2]/max_width*width_ratio).attr("height",20).attr("x",60).attr("y",45).attr("fill","#fbd775");
-			svg2.append("text").text(trans_data[1].districts[c2]).attr("x",70).attr("y",60).attr("fill","black");
-			var info2 = "<p>Category : " + "Transportation" + "</p><p>Variable :" +  data.trans[trans-1].variable + "</p><p>Unit : " + data.trans[trans-1].unit 
-						+ "</p><p>Year" + trans_data[0].year + " : " + trans_data[0].districts[c2] +  "</p><p>Year" + trans_data[1].year + " : " + trans_data[1].districts[c2];
-			d3.select("#intro"+"2"+count).selectAll("p").remove();
-			d3.select("#intro"+"2"+count).html(info2);
-			d3.select("#intro"+"2"+count).style("border-bottom","1px solid #fbd775");
-
-			max_total = Math.max(trans_data[0].districts.total,trans_data[1].districts.total);
-			d3.select("#chart"+"3"+count).selectAll("svg").remove();
-			d3.select("#table"+"3"+count).selectAll("table").remove();
-			svg3 = d3.select("#chart"+"3"+count).append("svg").attr("width",255).attr("height",70);
-			svg3.append("text").text(trans_data[0].year).attr("x",0).attr("y",20).attr("fill","#f8bc19");
-			svg3.append("rect").attr("width",trans_data[0].districts.total/max_total*width_ratio).attr("height",20).attr("x",60).attr("y",5).attr("fill","#f8bc19");
-			svg3.append("text").text(trans_data[0].districts.total).attr("x",70).attr("y",20).attr("fill","black");
-			svg3.append("text").text(trans_data[1].year).attr("x",0).attr("y",60).attr("fill","#fbd775");
-			svg3.append("rect").attr("width",trans_data[1].districts.total/max_total*width_ratio).attr("height",20).attr("x",60).attr("y",45).attr("fill","#fbd775");
-			svg3.append("text").text(trans_data[1].districts.total).attr("x",70).attr("y",60).attr("fill","black");
-			var info3 = "<p>Category : " + "Transportation" + "</p><p>Variable :" +  data.trans[trans-1].variable + "</p><p>Unit : " + data.trans[trans-1].unit 
-						+ "</p><p>Year" + trans_data[0].year + " : " + trans_data[0].districts.total +  "</p><p>Year" + trans_data[1].year + " : " + trans_data[1].districts.total;
-			d3.select("#intro"+"3"+count).selectAll("p").remove();
-			d3.select("#intro"+"3"+count).html(info3);
-			d3.select("#block"+"3"+count).style("border-bottom","1px solid #fbd775");
+			drawAreaChart(count, trans_data, c1, c2, "Transportation", data.trans[trans-1].variable, data.trans[trans-1].unit, width_ratio);
 
 			count++;
 		};
@@ -406,7 +364,78 @@ function numberFormat(num){
 	}
 }
 
+function drawAreaChart(count, filter_data, c1, c2, category, variable, unit, width_ratio){
+	d3.select("#chart"+"1"+count).selectAll("svg").remove();
+	var svg1 = d3.select("#chart"+"1"+count).append("svg").attr("width",255).attr("height",150);
+	max_width = Math.max(filter_data[0].districts[c1],filter_data[0].districts[c2],filter_data[1].districts[c1],filter_data[1].districts[c2]);
+	width = 205;
+	height = 110;
+	var margin = {top: 20, right: 20, bottom: 20, left: 30};
+ //    width = 960 - margin.left - margin.right,
+ //    height = 500 - margin.top - margin.bottom;
 
+	// var parseDate = d3.time.format("%d-%b-%y").parse;
+
+	var x = d3.scale.linear().range([0, width]);
+
+	var y = d3.scale.linear().range([height, 0]);
+	
+
+	var xAxis = d3.svg.axis()
+	    .scale(x).ticks(1).tickFormat(d3.format("d"))
+	    .orient("bottom");
+
+	var yAxis = d3.svg.axis()
+	    .scale(y).ticks(3)
+	    .orient("left");
+
+	var area1 = d3.svg.area()
+	    .x(function(d) { return x(d.year); })
+	    .y0(height)
+	    .y1(function(d) { return y(d.districts[c1]); });
+
+	var svg3 = svg1.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+	  x.domain(d3.extent(filter_data, function(d) { return d.year; }));
+	  y.domain([0,max_width]);
+
+	  svg3.append("path")
+	      .datum(filter_data)
+	      .attr("class", "area")
+	      .attr("d", area1);
+
+	  svg3.append("g")
+	      .attr("class", "x axis")
+	      .attr("transform", "translate(0," + height + ")")
+	      .call(xAxis);
+
+	  svg3.append("g")
+	      .attr("class", "y axis")
+	      .call(yAxis);
+
+	 var svg2 = d3.select("#chart"+"2"+count).append("svg").attr("width",255).attr("height",150);
+	 var svg4 = svg2.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+	 var area2 = d3.svg.area()
+	    .x(function(d) { return x(d.year); })
+	    .y0(height)
+	    .y1(function(d) { return y(d.districts[c2]); });
+	svg4.append("path")
+	      .datum(filter_data)
+	      .attr("class", "area")
+	      .attr("d", area2);
+
+	svg4.append("g")
+	      .attr("class", "x axis")
+	      .attr("transform", "translate(0," + height + ")")
+	      .call(xAxis);
+
+	svg4.append("g")
+	      .attr("class", "y axis")
+	      .call(yAxis);
+
+
+}
 
 
 

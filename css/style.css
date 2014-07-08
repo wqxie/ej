@@ -304,3 +304,14 @@ label.css-label {
 	-ms-user-select: none;
 	user-select: none;
 }
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.area {
+  fill: steelblue;
+}
