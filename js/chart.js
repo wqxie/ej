@@ -25,7 +25,6 @@ $(document).ready(function(){
 	});
 	function updateSvg(){
 		var mode = $("#showoption option:selected").val();
-		//mode = 
 		if(mode == 1){
 			var air1=0, air2=0,health1=0,health2=0,land=0,neighbor=0,trans=0,waste1=0,waste2=0, c1=1, c2=2;
 			var mode = 1;
@@ -77,7 +76,6 @@ $(document).ready(function(){
 			d3.selectAll(".chart-intro").selectAll("p").remove();
 			d3.selectAll(".chart-intro").style("border-bottom","0px");
 			d3.selectAll(".chart-block").style("border-bottom","0px");
-			// console.log($('#filter1').is(':checked'));
 			if($('#air1').is(':checked')){
 				air1=1;
 			}
@@ -116,92 +114,6 @@ $(document).ready(function(){
 			};
 		}
 	}
-	// $("#show-chart").on("click",function(){
-	// 	var air1=0, air2=0,health1=0,health2=0,land=0,neighbor=0,trans=0,waste1=0,waste2=0, c1=1, c2=2;
-	// 	var mode = 1;
-	// 	d3.selectAll("svg").remove();
-	// 	d3.selectAll(".chart-intro").selectAll("p").remove();
-	// 	if($('#air1').is(':checked')){
-	// 		air1=1;
-	// 	}
-	// 	if($('#air2').is(':checked')){
-	// 		air2=1;
-	// 	}
-	// 	if($('#health1').is(':checked')){
-	// 		health1=1;
-	// 	}
-	// 	if($('#health2').is(':checked')){
-	// 		health2=1;
-	// 	}
-	// 	if($('#land').is(':checked')){
-	// 		land=1;
-	// 	}
-	// 	if($('#neighbor').is(':checked')){
-	// 		neighbor=1;
-	// 	}
-	// 	if($('#trans').is(':checked')){
-	// 		trans=1;
-	// 	}
-	// 	if($('#waste1').is(':checked')){
-	// 		waste1=1;
-	// 	}
-	// 	if($('#waste2').is(':checked')){
-	// 		waste2=1;
-	// 	}
-	// 	if ($('#c1 option:selected').val()) {
-	// 		c1 = $('#c1 option:selected').val();
-	// 	};
-	// 	if ($('#c2 option:selected').val()) {
-	// 		c2 = $('#c2 option:selected').val();
-	// 	};
-	// 	if (air1+ air2+health1+health2+land+neighbor+trans+waste1+waste2>0) {
-	// 		drawChart(air1, air2,health1,health2,land,neighbor,trans,waste1,waste2,c1,c2);
-	// 	};
-	// });
-
-	// $("#show-table").on("click",function(){
-	// 	var air1=0, air2=0,health1=0,health2=0,land=0,neighbor=0,trans=0,waste1=0,waste2=0, c1=1, c2=2;
-	// 	var mode = 2;
-	// 	d3.selectAll("svg").remove();
-	// 	d3.selectAll(".chart-intro").selectAll("p").remove();
-	// 	// console.log($('#filter1').is(':checked'));
-	// 	if($('#air1').is(':checked')){
-	// 		air1=1;
-	// 	}
-	// 	if($('#air2').is(':checked')){
-	// 		air2=1;
-	// 	}
-	// 	if($('#health1').is(':checked')){
-	// 		health1=1;
-	// 	}
-	// 	if($('#health2').is(':checked')){
-	// 		health2=1;
-	// 	}
-	// 	if($('#land').is(':checked')){
-	// 		land=1;
-	// 	}
-	// 	if($('#neighbor').is(':checked')){
-	// 		neighbor=1;
-	// 	}
-	// 	if($('#trans').is(':checked')){
-	// 		trans=1;
-	// 	}
-	// 	if($('#waste1').is(':checked')){
-	// 		waste1=1;
-	// 	}
-	// 	if($('#waste2').is(':checked')){
-	// 		waste2=1;
-	// 	}
-	// 	if ($('#c1 option:selected').val()) {
-	// 		c1 = $('#c1 option:selected').val();
-	// 	};
-	// 	if ($('#c2 option:selected').val()) {
-	// 		c2 = $('#c2 option:selected').val();
-	// 	};
-	// 	if (air1+ air2+health1+health2+land+neighbor+trans+waste1+waste2>0) {
-	// 		drawTable(air1, air2,health1,health2,land,neighbor,trans,waste1,waste2,c1,c2);
-	// 	};
-	// });
 
 });
 function drawChart(air1, air2,health1,health2,land,neighbor,trans,waste1,waste2,c1,c2){
