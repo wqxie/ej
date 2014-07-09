@@ -16,38 +16,38 @@ require_once "header.php";
 			<div class="filter-title">Air</div>
 			<div class="filter-option">
 				<input id="air1" class="css-checkbox" type="checkbox" />
-				<label for="air1" name="air_1" class="css-label">GHG Emissions by TRI Facilities<img src="img/info.png" width="10" height="10"/></label>
+				<label for="air1" name="air_1" class="css-label">GHG Emissions by TRI Facilities<img src="img/info.png" width="10" height="10" data-name="GHG Emissions by TRI Facilities"/></label>
 				<input id="air2" class="css-checkbox" type="checkbox" />
-				<label for="air2" name="air_2" class="css-label">Total Air Releases<img src="img/info.png" width="10" height="10"/></label>
+				<label for="air2" name="air_2" class="css-label">Total Air Releases<img src="img/info.png" width="10" height="10" data-name="Total Air Releases"/></label>
 			</div>
 			<div class="filter-title">Health</div>
 			<div class="filter-option">
 				<input id="health1" class="css-checkbox" type="checkbox" />
-				<label for="health1" name="health_1" class="css-label">Elevated Blood Lead Level(EBLL)<img src="img/info.png" width="10" height="10"/></label>
+				<label for="health1" name="health_1" class="css-label">Elevated Blood Lead Level(EBLL)<img src="img/info.png" width="10" height="10" data-name="Elevated Blood Lead Level(EBLL)"/></label>
 				<input id="health2" class="css-checkbox" type="checkbox" />
-				<label for="health2" name="health_2" class="css-label">Infant Mortality Rate<img src="img/info.png" width="10" height="10"/></label>
+				<label for="health2" name="health_2" class="css-label">Infant Mortality Rate<img src="img/info.png" width="10" height="10" data-name="Infant Mortality Rate"/></label>
 			</div>
 			<div class="filter-title">Land</div>
 			<div class="filter-option">
 				<input id="land" class="css-checkbox" type="checkbox" />
-				<label for="land" name="land" class="css-label">Cumulative Trees Planted<img src="img/info.png" width="10" height="10"/></label>
+				<label for="land" name="land" class="css-label">Cumulative Trees Planted<img src="img/info.png" width="10" height="10" data-name="Cumulative Trees Planted"/></label>
 			</div>
 			<div class="filter-title">Neighborhoods</div>
 			<div class="filter-option">
 				<input id="neighbor" class="css-checkbox" type="checkbox" />
-				<label for="neighbor" name="neighbor" class="css-label">Residential in need of demo<img src="img/info.png" width="10" height="10"/></label>
+				<label for="neighbor" name="neighbor" class="css-label">Residential in need of demo<img src="img/info.png" width="10" height="10" data-name="Residential in need of demo"/></label>
 			</div>
 			<div class="filter-title">Transportation</div>
 			<div class="filter-option">
 				<input id="trans" class="css-checkbox" type="checkbox" />
-				<label for="trans" name="trans" class="css-label">Cumulative Miles of Bike Lanes<img src="img/info.png" width="10" height="10"/></label>
+				<label for="trans" name="trans" class="css-label">Cumulative Miles of Bike Lanes<img src="img/info.png" width="10" height="10" data-name="Cumulative Miles of Bike Lanes"/></label>
  			</div>
 			<div class="filter-title">Waste</div>
 			<div class="filter-option">
 				<input id="waste1" class="css-checkbox" type="checkbox" />
-				<label for="waste1" name="waste_1" class="css-label">Percent of Households Covered by Curbside Recycling<img src="img/info.png" width="10" height="10"/></label>
+				<label for="waste1" name="waste_1" class="css-label">Percent of Households Covered by Curbside Recycling<img src="img/info.png" width="10" height="10" data-name="Percent of Households Covered by Curbside Recycling"/></label>
 				<input id="waste2" class="css-checkbox" type="checkbox" />
-				<label for="waste2" name="waste_2" class="css-label">Total Onsite Land Releases (TRI)<img src="img/info.png" width="10" height="10"/></label>
+				<label for="waste2" name="waste_2" class="css-label">Total Onsite Land Releases (TRI)<img src="img/info.png" width="10" height="10" data-name="Total Onsite Land Releases (TRI)"/></label>
 			</div>
 			
 		</div>

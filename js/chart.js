@@ -4,7 +4,7 @@ $(document).ready(function(){
 			                  .style("position", "absolute")
 			                  .style("z-index", "100")
 			                  .attr("class","tooltip");
-		tooltip.html("Resource Information");
+		tooltip.html($(this).data("name"));
 		tooltip.style("visibility", "visible");	
 		tooltip.style("top",(event.pageY-40)+"px").style("left",(event.pageX-30)+"px");	
 	});
