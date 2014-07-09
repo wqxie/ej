@@ -1,314 +1,316 @@
 $(document).ready(function(){
-	$("#show-chart").on("click",function(){
-		var air=0, health=0, land=0, neighbor=0, trans=0, waste=0, c1=1, c2=2;
-		var mode = 1;
-		console.log($('#filter1').is(':checked'));
-		if($('input[name=air]:checked').val()){
-			air = $('input[name=air]:checked').val();
-		};
-		if($('input[name=health]:checked').val()){
-			health = $('input[name=health]:checked').val();
-		};
-		if($('input[name=land]:checked').val()){
-			land = $('input[name=land]:checked').val();
-		};
-		if($('input[name=neighbor]:checked').val()){
-			neighbor = $('input[name=neighbor]:checked').val();
-		};
-		if($('input[name=trans]:checked').val()){
-			trans = $('input[name=trans]:checked').val();
-		};
-		if($('input[name=waste]:checked').val()){
-			waste = $('input[name=waste]:checked').val();
-		};
-		if ($('#c1 option:selected').val()) {
-			c1 = $('#c1 option:selected').val();
-		};
-		if ($('#c2 option:selected').val()) {
-			c2 = $('#c2 option:selected').val();
-		};
-		console.log(air,health,land,neighbor,trans,waste,c1,c2);
-		if (air+health+land+neighbor+trans+waste>0) {
-			drawChart(air,health,land,neighbor,trans,waste,c1,c2);
-		};
+	$("label.css-label img").on("mouseover",function(){
+		var tooltip = d3.select("body").append("div")
+			                  .style("position", "absolute")
+			                  .style("z-index", "100")
+			                  .attr("class","tooltip");
+		tooltip.html("Resource Information");
+		tooltip.style("visibility", "visible");	
+		tooltip.style("top",(event.pageY-40)+"px").style("left",(event.pageX-30)+"px");	
 	});
+	$("label.css-label img").on("mouseout",function(){
+		d3.selectAll(".tooltip").remove();
+	});
+	$("input[type=checkbox]").click(function(){
+		updateSvg();
+	});
+	$("#showoption").on("change",function(){
+		updateSvg();
+	});
+	$("#c1").on("change",function(){
+		updateSvg();
+	});
+	$("#c2").on("change",function(){
+		updateSvg();
+	});
+	function updateSvg(){
+		var mode = $("#showoption option:selected").val();
+		//mode = 
+		if(mode == 1){
+			var air1=0, air2=0,health1=0,health2=0,land=0,neighbor=0,trans=0,waste1=0,waste2=0, c1=1, c2=2;
+			var mode = 1;
+			d3.selectAll("svg").remove();
+			d3.selectAll(".chart-intro").selectAll("p").remove();
+			d3.selectAll(".chart-intro").style("border-bottom","0px");
+			d3.selectAll(".chart-block").style("border-bottom","0px");
+			if($('#air1').is(':checked')){
+				air1=1;
+			}
+			if($('#air2').is(':checked')){
+				air2=1;
+			}
+			if($('#health1').is(':checked')){
+				health1=1;
+			}
+			if($('#health2').is(':checked')){
+				health2=1;
+			}
+			if($('#land').is(':checked')){
+				land=1;
+			}
+			if($('#neighbor').is(':checked')){
+				neighbor=1;
+			}
+			if($('#trans').is(':checked')){
+				trans=1;
+			}
+			if($('#waste1').is(':checked')){
+				waste1=1;
+			}
+			if($('#waste2').is(':checked')){
+				waste2=1;
+			}
+			if ($('#c1 option:selected').val()) {
+				c1 = $('#c1 option:selected').val();
+			};
+			if ($('#c2 option:selected').val()) {
+				c2 = $('#c2 option:selected').val();
+			};
+			if (air1+ air2+health1+health2+land+neighbor+trans+waste1+waste2>0) {
+				drawChart(air1, air2,health1,health2,land,neighbor,trans,waste1,waste2,c1,c2);
+			};
+		} else if(mode == 2){
+			var air1=0, air2=0,health1=0,health2=0,land=0,neighbor=0,trans=0,waste1=0,waste2=0, c1=1, c2=2;
+			var mode = 2;
+			d3.selectAll("svg").remove();
+			d3.selectAll("table").remove();
+			d3.selectAll(".chart-intro").selectAll("p").remove();
+			d3.selectAll(".chart-intro").style("border-bottom","0px");
+			d3.selectAll(".chart-block").style("border-bottom","0px");
+			// console.log($('#filter1').is(':checked'));
+			if($('#air1').is(':checked')){
+				air1=1;
+			}
+			if($('#air2').is(':checked')){
+				air2=1;
+			}
+			if($('#health1').is(':checked')){
+				health1=1;
+			}
+			if($('#health2').is(':checked')){
+				health2=1;
+			}
+			if($('#land').is(':checked')){
+				land=1;
+			}
+			if($('#neighbor').is(':checked')){
+				neighbor=1;
+			}
+			if($('#trans').is(':checked')){
+				trans=1;
+			}
+			if($('#waste1').is(':checked')){
+				waste1=1;
+			}
+			if($('#waste2').is(':checked')){
+				waste2=1;
+			}
+			if ($('#c1 option:selected').val()) {
+				c1 = $('#c1 option:selected').val();
+			};
+			if ($('#c2 option:selected').val()) {
+				c2 = $('#c2 option:selected').val();
+			};
+			if (air1+ air2+health1+health2+land+neighbor+trans+waste1+waste2>0) {
+				drawTable(air1, air2,health1,health2,land,neighbor,trans,waste1,waste2,c1,c2);
+			};
+		}
+	}
+	// $("#show-chart").on("click",function(){
+	// 	var air1=0, air2=0,health1=0,health2=0,land=0,neighbor=0,trans=0,waste1=0,waste2=0, c1=1, c2=2;
+	// 	var mode = 1;
+	// 	d3.selectAll("svg").remove();
+	// 	d3.selectAll(".chart-intro").selectAll("p").remove();
+	// 	if($('#air1').is(':checked')){
+	// 		air1=1;
+	// 	}
+	// 	if($('#air2').is(':checked')){
+	// 		air2=1;
+	// 	}
+	// 	if($('#health1').is(':checked')){
+	// 		health1=1;
+	// 	}
+	// 	if($('#health2').is(':checked')){
+	// 		health2=1;
+	// 	}
+	// 	if($('#land').is(':checked')){
+	// 		land=1;
+	// 	}
+	// 	if($('#neighbor').is(':checked')){
+	// 		neighbor=1;
+	// 	}
+	// 	if($('#trans').is(':checked')){
+	// 		trans=1;
+	// 	}
+	// 	if($('#waste1').is(':checked')){
+	// 		waste1=1;
+	// 	}
+	// 	if($('#waste2').is(':checked')){
+	// 		waste2=1;
+	// 	}
+	// 	if ($('#c1 option:selected').val()) {
+	// 		c1 = $('#c1 option:selected').val();
+	// 	};
+	// 	if ($('#c2 option:selected').val()) {
+	// 		c2 = $('#c2 option:selected').val();
+	// 	};
+	// 	if (air1+ air2+health1+health2+land+neighbor+trans+waste1+waste2>0) {
+	// 		drawChart(air1, air2,health1,health2,land,neighbor,trans,waste1,waste2,c1,c2);
+	// 	};
+	// });
 
-	$("#show-table").on("click",function(){
-		var air=0, health=0, land=0, neighbor=0, trans=0, waste=0, c1=1, c2=2;
-		var mode = 2;
-		if($('input[name=air]:checked').val()){
-			air = $('input[name=air]:checked').val();
-		};
-		if($('input[name=health]:checked').val()){
-			health = $('input[name=health]:checked').val();
-		};
-		if($('input[name=land]:checked').val()){
-			land = $('input[name=land]:checked').val();
-		};
-		if($('input[name=neighbor]:checked').val()){
-			neighbor = $('input[name=neighbor]:checked').val();
-		};
-		if($('input[name=trans]:checked').val()){
-			trans = $('input[name=trans]:checked').val();
-		};
-		if($('input[name=waste]:checked').val()){
-			waste = $('input[name=waste]:checked').val();
-		};
-		if ($('#c1 option:selected').val()) {
-			c1 = $('#c1 option:selected').val();
-		};
-		if ($('#c2 option:selected').val()) {
-			c2 = $('#c2 option:selected').val();
-		};
-		console.log(air,health,land,neighbor,trans,waste,c1,c2);
-		if (air+health+land+neighbor+trans+waste>0) {
-			drawTable(air,health,land,neighbor,trans,waste,c1,c2);
-		};
-	});
+	// $("#show-table").on("click",function(){
+	// 	var air1=0, air2=0,health1=0,health2=0,land=0,neighbor=0,trans=0,waste1=0,waste2=0, c1=1, c2=2;
+	// 	var mode = 2;
+	// 	d3.selectAll("svg").remove();
+	// 	d3.selectAll(".chart-intro").selectAll("p").remove();
+	// 	// console.log($('#filter1').is(':checked'));
+	// 	if($('#air1').is(':checked')){
+	// 		air1=1;
+	// 	}
+	// 	if($('#air2').is(':checked')){
+	// 		air2=1;
+	// 	}
+	// 	if($('#health1').is(':checked')){
+	// 		health1=1;
+	// 	}
+	// 	if($('#health2').is(':checked')){
+	// 		health2=1;
+	// 	}
+	// 	if($('#land').is(':checked')){
+	// 		land=1;
+	// 	}
+	// 	if($('#neighbor').is(':checked')){
+	// 		neighbor=1;
+	// 	}
+	// 	if($('#trans').is(':checked')){
+	// 		trans=1;
+	// 	}
+	// 	if($('#waste1').is(':checked')){
+	// 		waste1=1;
+	// 	}
+	// 	if($('#waste2').is(':checked')){
+	// 		waste2=1;
+	// 	}
+	// 	if ($('#c1 option:selected').val()) {
+	// 		c1 = $('#c1 option:selected').val();
+	// 	};
+	// 	if ($('#c2 option:selected').val()) {
+	// 		c2 = $('#c2 option:selected').val();
+	// 	};
+	// 	if (air1+ air2+health1+health2+land+neighbor+trans+waste1+waste2>0) {
+	// 		drawTable(air1, air2,health1,health2,land,neighbor,trans,waste1,waste2,c1,c2);
+	// 	};
+	// });
 
 });
-function drawChart(air,health,land,neighbor,trans,waste,c1,c2){
+function drawChart(air1, air2,health1,health2,land,neighbor,trans,waste1,waste2,c1,c2){
 	d3.json("js/fake2.json", function(error, data) {
 		var count = 1;
 		var width_ratio = 180;
-		if (air) {
-			air_data = data.air[air-1].years;
-			drawBarChart(count, air_data, c1, c2, "Air", data.air[air-1].variable, data.air[air-1].unit, width_ratio);
+		if (air1) {
+			air_data = data.air[0].years;
+			drawBarChart(count, air_data, c1, c2, "Air", data.air[0].variable, data.air[0].unit, width_ratio);
+			drawTotal(count, air_data, c1, c2, "Air", data.air[0].variable, data.air[0].unit, width_ratio);
 			count++;
 		};
-		if (health) {
-			health_data = data.health[health-1].years;
-			drawBarChart(count, health_data, c1, c2, "Health", data.health[health-1].variable, data.health[health-1].unit, width_ratio);
+		if (air2) {
+			air_data = data.air[1].years;
+			drawBarChart(count, air_data, c1, c2, "Air", data.air[1].variable, data.air[1].unit, width_ratio);
+			drawTotal(count, air_data, c1, c2, "Air", data.air[0].variable, data.air[0].unit, width_ratio);
+			count++;
+		};
+		if (health1) {
+			health_data = data.health[0].years;
+			drawAreaChart(count, health_data, c1, c2, "Health", data.health[0].variable, data.health[0].unit, width_ratio);
+			drawTotal(count, health_data, c1, c2, "Health", data.health[0].variable, data.health[0].unit, width_ratio);
+			count++;
+		};
+		if (health2) {
+			health_data = data.health[1].years;
+			drawBarChart(count, health_data, c1, c2, "Health", data.health[1].variable, data.health[1].unit, width_ratio);
+			drawTotal(count, health_data, c1, c2, "Health", data.health[1].variable, data.health[1].unit, width_ratio);
 			count++;
 		};
 		if (land) {
-			land_data = data.land[land-1].years;
-			drawBarChart(count, land_data, c1, c2, "Land", data.land[land-1].variable, data.land[land-1].unit, width_ratio);
+			land_data = data.land[0].years;
+			drawAreaChart(count, land_data, c1, c2, "Land", data.land[0].variable, data.land[0].unit, width_ratio);
+			drawTotal(count, land_data, c1, c2, "Land", data.land[0].variable, data.land[0].unit, width_ratio);
 			count++;
 		};
 		if (neighbor) {
-			neighbor_data = data.neighbor[neighbor-1].years;
-			drawBarChart(count, neighbor_data, c1, c2, "Neighborhoods", data.neighbor[neighbor-1].variable, data.neighbor[neighbor-1].unit, width_ratio);
+			neighbor_data = data.neighbor[0].years;
+			drawBarChart(count, neighbor_data, c1, c2, "Neighborhoods", data.neighbor[0].variable, data.neighbor[0].unit, width_ratio);
+			drawTotal(count, neighbor_data, c1, c2, "Neighborhoods", data.neighbor[0].variable, data.neighbor[0].unit, width_ratio);
 			count++;
 		};
 		if (trans) {
-			
-			trans_data = data.trans[trans-1].years;
-			drawAreaChart(count, trans_data, c1, c2, "Transportation", data.trans[trans-1].variable, data.trans[trans-1].unit, width_ratio);
-
+			trans_data = data.trans[0].years;
+			drawAreaChart(count, trans_data, c1, c2, "Transportation", data.trans[0].variable, data.trans[0].unit, width_ratio);
+			drawTotal(count, trans_data, c1, c2, "Transportation", data.trans[0].variable, data.trans[0].unit, width_ratio);
 			count++;
 		};
-		if (waste) {
-			d3.select("#chart"+"1"+count).selectAll("svg").remove();
-			svg1 = d3.select("#chart"+"1"+count).append("svg").attr("width",255).attr("height",70);
-			waste_data = data.waste[waste-1].years;
-			max_width = Math.max(waste_data[0].districts[c1],waste_data[0].districts[c2],waste_data[1].districts[c1],waste_data[1].districts[c2]);
-			svg1.append("text").text(waste_data[0].year).attr("x",0).attr("y",20).attr("fill","#f8bc19");
-			svg1.append("rect").attr("width",waste_data[0].districts[c1]/max_width*width_ratio).attr("height",20).attr("x",60).attr("y",5).attr("fill","#f8bc19");
-			svg1.append("text").text(waste_data[0].districts[c1]).attr("x",70).attr("y",20).attr("fill","black");
-			svg1.append("text").text(waste_data[1].year).attr("x",0).attr("y",60).attr("fill","#fbd775");
-			svg1.append("rect").attr("width",waste_data[1].districts[c1]/max_width*width_ratio).attr("height",20).attr("x",60).attr("y",45).attr("fill","#fbd775");
-			svg1.append("text").text(waste_data[1].districts[c1]).attr("x",70).attr("y",60).attr("fill","black");
-			var info1 = "<p>Category : " + "Waste" + "</p><p>Variable :" +  data.waste[waste-1].variable + "</p><p>Unit : " + data.waste[waste-1].unit 
-						+ "</p><p>Year" + waste_data[0].year + " : " + waste_data[0].districts[c1] +  "</p><p>Year" + waste_data[1].year + " : " + waste_data[1].districts[c1];
-			d3.select("#intro"+"1"+count).selectAll("p").remove();
-			d3.select("#intro"+"1"+count).html(info1);
-			d3.select("#intro"+"1"+count).style("border-bottom","1px solid #fbd775");
-
-			d3.select("#chart"+"2"+count).selectAll("svg").remove();
-			svg2 = d3.select("#chart"+"2"+count).append("svg").attr("width",255).attr("height",70);
-			svg2.append("text").text(waste_data[0].year).attr("x",0).attr("y",20).attr("fill","#f8bc19");
-			svg2.append("rect").attr("width",waste_data[0].districts[c2]/max_width*width_ratio).attr("height",20).attr("x",60).attr("y",5).attr("fill","#f8bc19");
-			svg2.append("text").text(waste_data[0].districts[c2]).attr("x",70).attr("y",20).attr("fill","black");
-			svg2.append("text").text(waste_data[1].year).attr("x",0).attr("y",60).attr("fill","#fbd775");
-			svg2.append("rect").attr("width",waste_data[1].districts[c2]/max_width*width_ratio).attr("height",20).attr("x",60).attr("y",45).attr("fill","#fbd775");
-			svg2.append("text").text(waste_data[1].districts[c2]).attr("x",70).attr("y",60).attr("fill","black");
-			var info2 = "<p>Category : " + "Waste" + "</p><p>Variable :" +  data.waste[waste-1].variable + "</p><p>Unit : " + data.waste[waste-1].unit 
-						+ "</p><p>Year" + waste_data[0].year + " : " + waste_data[0].districts[c2] +  "</p><p>Year" + waste_data[1].year + " : " + waste_data[1].districts[c2];
-			d3.select("#intro"+"2"+count).selectAll("p").remove();
-			d3.select("#intro"+"2"+count).html(info2);
-			d3.select("#intro"+"2"+count).style("border-bottom","1px solid #fbd775");
-
-			max_total = Math.max(waste_data[0].districts.total,waste_data[1].districts.total);
-			d3.select("#chart"+"3"+count).selectAll("svg").remove();
-			d3.select("#table"+"3"+count).selectAll("table").remove();
-			svg3 = d3.select("#chart"+"3"+count).append("svg").attr("width",255).attr("height",70);
-			svg3.append("text").text(waste_data[0].year).attr("x",0).attr("y",20).attr("fill","#f8bc19");
-			svg3.append("rect").attr("width",waste_data[0].districts.total/max_total*width_ratio).attr("height",20).attr("x",60).attr("y",5).attr("fill","#f8bc19");
-			svg3.append("text").text(waste_data[0].districts.total).attr("x",70).attr("y",20).attr("fill","black");
-			svg3.append("text").text(waste_data[1].year).attr("x",0).attr("y",60).attr("fill","#fbd775");
-			svg3.append("rect").attr("width",waste_data[1].districts.total/max_total*width_ratio).attr("height",20).attr("x",60).attr("y",45).attr("fill","#fbd775");
-			svg3.append("text").text(waste_data[1].districts.total).attr("x",70).attr("y",60).attr("fill","black");
-			var info3 = "<p>Category : " + "Waste" + "</p><p>Variable :" +  data.waste[waste-1].variable + "</p><p>Unit : " + data.waste[waste-1].unit 
-						+ "</p><p>Year" + waste_data[0].year + " : " + waste_data[0].districts.total +  "</p><p>Year" + waste_data[1].year + " : " + waste_data[1].districts.total;
-			d3.select("#intro"+"3"+count).selectAll("p").remove();
-			d3.select("#intro"+"3"+count).html(info3);
-			d3.select("#block"+"3"+count).style("border-bottom","1px solid #fbd775");
-
+		if (waste1) {
+			waste_data = data.waste[0].years;
+			drawAreaChart(count, waste_data, c1, c2, "Waste", data.waste[0].variable, data.waste[0].unit, width_ratio);
+			drawTotal(count, waste_data, c1, c2, "Waste", data.waste[0].variable, data.waste[0].unit, width_ratio);
 			count++;
-		};		
+		};
+		if (waste2) {
+			waste_data = data.waste[1].years;
+			drawBarChart(count, waste_data, c1, c2, "Waste", data.waste[1].variable, data.waste[1].unit, width_ratio);
+			drawTotal(count, waste_data, c1, c2, "Waste", data.waste[1].variable, data.waste[1].unit, width_ratio);
+			count++;
+		};			
 	});
 	
 }
-function drawTable(air,health,land,neighbor,trans,waste,c1,c2){
+function drawTable(air1, air2,health1,health2,land,neighbor,trans,waste1,waste2,c1,c2){
 	d3.json("js/fake2.json", function(error, data) {
 		var count = 1;
-		if (air) {
-			d3.select("#chart"+"1"+count).selectAll("svg").remove();
-			d3.select("#chart"+"1"+count).selectAll("table").remove();
-			air_data = data.air[air-1].years;
-			var info1 = "<table><tr><td style='font-size:15px;'>Air</td><td>" + air_data[0].year + "</td><td>" + air_data[1].year + "</td></tr><tr><td>"
-						+ data.air[air-1].variable + "("+ data.air[air-1].unit +")</td><td>"+air_data[0].districts[c1]+"</td><td>"+air_data[1].districts[c1]+"</td></tr></table>";
-			d3.select("#intro"+"1"+count).html(info1);
-			d3.select("#intro"+"1"+count).style("border-bottom","1px solid #fbd775");
-
-			d3.select("#chart"+"2"+count).selectAll("svg").remove();
-			d3.select("#chart"+"2"+count).selectAll("table").remove();
-			air_data = data.air[air-1].years;
-			var info2 = "<table><tr><td style='font-size:15px;'>Air</td><td>" + air_data[0].year + "</td><td>" + air_data[1].year + "</td></tr><tr><td>"
-						+ data.air[air-1].variable + "("+ data.air[air-1].unit +")</td><td>"+air_data[0].districts[c2]+"</td><td>"+air_data[1].districts[c2]+"</td></tr></table>";
-			d3.select("#intro"+"2"+count).html(info2);
-			d3.select("#intro"+"2"+count).style("border-bottom","1px solid #fbd775");
-
-			d3.select("#block"+"3"+count).selectAll("svg").remove();
-			d3.select("#block"+"3"+count).selectAll("p").remove();
-			d3.select("#table"+"3"+count).selectAll("table").remove();
-			air_data = data.air[air-1].years;
-			var info2 = "<table><tr><td style='font-size:15px;'>Air</td><td>" + air_data[0].year + "</td><td>" + air_data[1].year + "</td></tr><tr><td>"
-						+ data.air[air-1].variable + "("+ data.air[air-1].unit +")</td><td>"+air_data[0].districts.total+"</td><td>"+air_data[1].districts.total+"</td></tr></table>";
-			d3.select("#table"+"3"+count).html(info2);
-			d3.select("#block"+"3"+count).style("border-bottom","1px solid #fbd775");
-
+		if (air1) {
+			air_data = data.air[0].years;
+			drawDataTable(count, air_data, c1, c2, "Air", data.air[0].variable, data.air[0].unit);
 			count++;
 		};
-		if (health) {
-			d3.select("#chart"+"1"+count).selectAll("svg").remove();
-			d3.select("#chart"+"1"+count).selectAll("table").remove();
-			health_data = data.health[health-1].years;
-			var info1 = "<table><tr><td style='font-size:15px;'>Health</td><td>" + health_data[0].year + "</td><td>" + health_data[1].year + "</td></tr><tr><td>"
-						+ data.health[health-1].variable + "("+ data.health[health-1].unit +")</td><td>"+health_data[0].districts[c1]+"</td><td>"+health_data[1].districts[c1]+"</td></tr></table>";
-			d3.select("#intro"+"1"+count).html(info1);
-			d3.select("#intro"+"1"+count).style("border-bottom","1px solid #fbd775");
-
-			d3.select("#chart"+"2"+count).selectAll("svg").remove();
-			d3.select("#chart"+"2"+count).selectAll("table").remove();
-			health_data = data.health[health-1].years;
-			var info2 = "<table><tr><td style='font-size:15px;'>Health</td><td>" + health_data[0].year + "</td><td>" + health_data[1].year + "</td></tr><tr><td>"
-						+ data.health[health-1].variable + "("+ data.health[health-1].unit +")</td><td>"+health_data[0].districts[c2]+"</td><td>"+health_data[1].districts[c2]+"</td></tr></table>";
-			d3.select("#intro"+"2"+count).html(info2);
-			d3.select("#intro"+"2"+count).style("border-bottom","1px solid #fbd775");
-			d3.select("#block"+"3"+count).selectAll("svg").remove();
-			d3.select("#block"+"3"+count).selectAll("p").remove();
-			d3.select("#table"+"3"+count).selectAll("table").remove();
-			health_data = data.health[health-1].years;
-			var info2 = "<table><tr><td style='font-size:15px;'>Health</td><td>" + health_data[0].year + "</td><td>" + health_data[1].year + "</td></tr><tr><td>"
-						+ data.health[health-1].variable + "("+ data.health[health-1].unit +")</td><td>"+health_data[0].districts.total+"</td><td>"+health_data[1].districts.total+"</td></tr></table>";
-			d3.select("#table"+"3"+count).html(info2);
-			d3.select("#block"+"3"+count).style("border-bottom","1px solid #fbd775");
+		if (air2) {
+			air_data = data.air[1].years;
+			drawDataTable(count, air_data, c1, c2, "Air", data.air[1].variable, data.air[1].unit);
+			count++;
+		};
+		if (health1) {
+			health_data = data.health[0].years;
+			drawDataTable(count, health_data, c1, c2, "Health", data.health[0].variable, data.health[0].unit);
+			count++;
+		};
+		if (health2) {
+			health_data = data.health[1].years;
+			drawDataTable(count, health_data, c1, c2, "Health", data.health[1].variable, data.health[1].unit);
 			count++;
 		};
 		if (land) {
-			d3.select("#chart"+"1"+count).selectAll("svg").remove();
-			d3.select("#chart"+"1"+count).selectAll("table").remove();
-			land_data = data.land[land-1].years;
-			var info1 = "<table><tr><td style='font-size:15px;'>Land</td><td>" + land_data[0].year + "</td><td>" + land_data[1].year + "</td></tr><tr><td>"
-						+ data.land[land-1].variable + "("+ data.land[land-1].unit +")</td><td>"+land_data[0].districts[c1]+"</td><td>"+land_data[1].districts[c1]+"</td></tr></table>";
-			d3.select("#intro"+"1"+count).html(info1);
-			d3.select("#intro"+"1"+count).style("border-bottom","1px solid #fbd775");
-
-			d3.select("#chart"+"2"+count).selectAll("svg").remove();
-			d3.select("#chart"+"2"+count).selectAll("table").remove();
-			land_data = data.land[land-1].years;
-			var info2 = "<table><tr><td style='font-size:15px;'>Land</td><td>" + land_data[0].year + "</td><td>" + land_data[1].year + "</td></tr><tr><td>"
-						+ data.land[land-1].variable + "("+ data.land[land-1].unit +")</td><td>"+land_data[0].districts[c2]+"</td><td>"+land_data[1].districts[c2]+"</td></tr></table>";
-			d3.select("#intro"+"2"+count).html(info2);
-			d3.select("#intro"+"2"+count).style("border-bottom","1px solid #fbd775");
-			d3.select("#block"+"3"+count).selectAll("svg").remove();
-			d3.select("#block"+"3"+count).selectAll("p").remove();
-			d3.select("#table"+"3"+count).selectAll("table").remove();
-			land_data = data.land[land-1].years;
-			var info2 = "<table><tr><td style='font-size:15px;'>Land</td><td>" + land_data[0].year + "</td><td>" + land_data[1].year + "</td></tr><tr><td>"
-						+ data.land[land-1].variable + "("+ data.land[land-1].unit +")</td><td>"+land_data[0].districts.total+"</td><td>"+land_data[1].districts.total+"</td></tr></table>";
-			d3.select("#table"+"3"+count).html(info2);
-			d3.select("#bl"+"3"+count).style("border-bottom","1px solid #fbd775");
+			land_data = data.land[0].years;
+			drawDataTable(count, land_data, c1, c2, "Land", data.land[0].variable, data.land[0].unit);
 			count++;
 		};
 		if (neighbor) {
-			d3.select("#chart"+"1"+count).selectAll("svg").remove();
-			d3.select("#chart"+"1"+count).selectAll("table").remove();
-			neighbor_data = data.neighbor[neighbor-1].years;
-			var info1 = "<table><tr><td style='font-size:15px;'>Neighborhoods</td><td>" + neighbor_data[0].year + "</td><td>" + neighbor_data[1].year + "</td></tr><tr><td>"
-						+ data.neighbor[neighbor-1].variable + "("+ data.neighbor[neighbor-1].unit +")</td><td>"+neighbor_data[0].districts[c1]+"</td><td>"+neighbor_data[1].districts[c1]+"</td></tr></table>";
-			d3.select("#intro"+"1"+count).html(info1);
-			d3.select("#intro"+"1"+count).style("border-bottom","1px solid #fbd775");
-
-			d3.select("#chart"+"2"+count).selectAll("svg").remove();
-			d3.select("#chart"+"2"+count).selectAll("table").remove();
-			neighbor_data = data.neighbor[neighbor-1].years;
-			var info2 = "<table><tr><td style='font-size:15px;'>Neighborhoods</td><td>" + neighbor_data[0].year + "</td><td>" + neighbor_data[1].year + "</td></tr><tr><td>"
-						+ data.neighbor[neighbor-1].variable + "("+ data.neighbor[neighbor-1].unit +")</td><td>"+neighbor_data[0].districts[c2]+"</td><td>"+neighbor_data[1].districts[c2]+"</td></tr></table>";
-			d3.select("#intro"+"2"+count).html(info2);
-			d3.select("#intro"+"2"+count).style("border-bottom","1px solid #fbd775");
-			d3.select("#block"+"3"+count).selectAll("svg").remove();
-			d3.select("#block"+"3"+count).selectAll("p").remove();
-			d3.select("#table"+"3"+count).selectAll("table").remove();
-			neighbor_data = data.neighbor[neighbor-1].years;
-			var info2 = "<table><tr><td style='font-size:15px;'>Neighborhoods</td><td>" + neighbor_data[0].year + "</td><td>" + neighbor_data[1].year + "</td></tr><tr><td>"
-						+ data.neighbor[neighbor-1].variable + "("+ data.neighbor[neighbor-1].unit +")</td><td>"+neighbor_data[0].districts.total+"</td><td>"+neighbor_data[1].districts.total+"</td></tr></table>";
-			d3.select("#table"+"3"+count).html(info2);
-			d3.select("#block"+"3"+count).style("border-bottom","1px solid #fbd775");
+			neighbor_data = data.neighbor[0].years;
+			drawDataTable(count, neighbor_data, c1, c2, "Neighborhoods", data.neighbor[0].variable, data.neighbor[0].unit);
 			count++;
 		};
 		if (trans) {
-			d3.select("#chart"+"1"+count).selectAll("svg").remove();
-			d3.select("#chart"+"1"+count).selectAll("table").remove();
-			trans_data = data.trans[trans-1].years;
-			var info1 = "<table><tr><td style='font-size:15px;'>Transportation</td><td>" + trans_data[0].year + "</td><td>" + trans_data[1].year + "</td></tr><tr><td>"
-						+ data.trans[trans-1].variable + "("+ data.trans[trans-1].unit +")</td><td>"+trans_data[0].districts[c1]+"</td><td>"+trans_data[1].districts[c1]+"</td></tr></table>";
-			d3.select("#intro"+"1"+count).html(info1);
-			d3.select("#intro"+"1"+count).style("border-bottom","1px solid #fbd775");
-
-			d3.select("#chart"+"2"+count).selectAll("svg").remove();
-			d3.select("#chart"+"2"+count).selectAll("table").remove();
-			trans_data = data.trans[trans-1].years;
-			var info2 = "<table><tr><td style='font-size:15px;'>Transportation</td><td>" + trans_data[0].year + "</td><td>" + trans_data[1].year + "</td></tr><tr><td>"
-						+ data.trans[trans-1].variable + "("+ data.trans[trans-1].unit +")</td><td>"+trans_data[0].districts[c2]+"</td><td>"+trans_data[1].districts[c2]+"</td></tr></table>";
-			d3.select("#intro"+"2"+count).html(info2);
-			d3.select("#intro"+"2"+count).style("border-bottom","1px solid #fbd775");
-			d3.select("#block"+"3"+count).selectAll("svg").remove();
-			d3.select("#block"+"3"+count).selectAll("p").remove();
-			d3.select("#table"+"3"+count).selectAll("table").remove();
-			trans_data = data.trans[trans-1].years;
-			var info2 = "<table><tr><td style='font-size:15px;'>Transportation</td><td>" + trans_data[0].year + "</td><td>" + trans_data[1].year + "</td></tr><tr><td>"
-						+ data.trans[trans-1].variable + "("+ data.trans[trans-1].unit +")</td><td>"+trans_data[0].districts.total+"</td><td>"+trans_data[1].districts.total+"</td></tr></table>";
-			d3.select("#table"+"3"+count).html(info2);
-			d3.select("#block"+"3"+count).style("border-bottom","1px solid #fbd775");
+			trans_data = data.trans[0].years;
+			drawDataTable(count, trans_data, c1, c2, "Transportation", data.trans[0].variable, data.trans[0].unit);
 			count++;
 		};
-		if (waste) {
-			d3.select("#chart"+"1"+count).selectAll("svg").remove();
-			d3.select("#chart"+"1"+count).selectAll("table").remove();
-			waste_data = data.waste[waste-1].years;
-			var info1 = "<table><tr><td style='font-size:15px;'>Waste</td><td>" + waste_data[0].year + "</td><td>" + waste_data[1].year + "</td></tr><tr><td>"
-						+ data.waste[waste-1].variable + "("+ data.waste[waste-1].unit +")</td><td>"+waste_data[0].districts[c1]+"</td><td>"+waste_data[1].districts[c1]+"</td></tr></table>";
-			d3.select("#intro"+"1"+count).html(info1);
-			d3.select("#intro"+"1"+count).style("border-bottom","1px solid #fbd775");
-
-			d3.select("#chart"+"2"+count).selectAll("svg").remove();
-			d3.select("#chart"+"2"+count).selectAll("table").remove();
-			waste_data = data.waste[waste-1].years;
-			var info2 = "<table><tr><td style='font-size:15px;'>Waste</td><td>" + waste_data[0].year + "</td><td>" + waste_data[1].year + "</td></tr><tr><td>"
-						+ data.waste[waste-1].variable + "("+ data.waste[waste-1].unit +")</td><td>"+waste_data[0].districts[c2]+"</td><td>"+waste_data[1].districts[c2]+"</td></tr></table>";
-			d3.select("#intro"+"2"+count).html(info2);
-			d3.select("#intro"+"2"+count).style("border-bottom","1px solid #fbd775");
-			d3.select("#block"+"3"+count).selectAll("svg").remove();
-			d3.select("#block"+"3"+count).selectAll("p").remove();
-			d3.select("#table"+"3"+count).selectAll("table").remove();
-			waste_data = data.waste[waste-1].years;
-			var info2 = "<table><tr><td style='font-size:15px;'>Waste</td><td>" + waste_data[0].year + "</td><td>" + waste_data[1].year + "</td></tr><tr><td>"
-						+ data.waste[waste-1].variable + "("+ data.waste[waste-1].unit +")</td><td>"+waste_data[0].districts.total+"</td><td>"+waste_data[1].districts.total+"</td></tr></table>";
-			d3.select("#table"+"3"+count).html(info2);
-			d3.select("#block"+"3"+count).style("border-bottom","1px solid #fbd775");
+		if (waste1) {
+			waste_data = data.waste[0].years;
+			drawDataTable(count, waste_data, c1, c2, "Waste", data.waste[0].variable, data.waste[0].unit);
+			count++;
+		};
+		if (waste2) {
+			waste_data = data.waste[1].years;
+			drawDataTable(count, waste_data, c1, c2, "Waste", data.waste[1].variable, data.waste[1].unit);
 			count++;
 		};
 	});
@@ -369,19 +371,12 @@ function drawAreaChart(count, filter_data, c1, c2, category, variable, unit, wid
 	d3.select("#chart"+"2"+count).selectAll("svg").remove();
 	var svg1 = d3.select("#chart"+"1"+count).append("svg").attr("width",255).attr("height",150);
 	max_width = Math.max(filter_data[0].districts[c1],filter_data[0].districts[c2],filter_data[1].districts[c1],filter_data[1].districts[c2]);
-	width = 205;
+	width = 185;
 	height = 110;
-	var margin = {top: 20, right: 20, bottom: 20, left: 30};
- //    width = 960 - margin.left - margin.right,
- //    height = 500 - margin.top - margin.bottom;
-
-	// var parseDate = d3.time.format("%d-%b-%y").parse;
-
+	var margin = {top: 20, right: 20, bottom: 20, left: 50};
 	var x = d3.scale.linear().range([0, width]);
-
 	var y = d3.scale.linear().range([height, 0]);
 	
-
 	var xAxis = d3.svg.axis()
 	    .scale(x).ticks(1).tickFormat(d3.format("d"))
 	    .orient("bottom");
@@ -457,8 +452,51 @@ function drawAreaChart(count, filter_data, c1, c2, category, variable, unit, wid
 			d3.select("#intro"+"2"+count).style("border-bottom","1px solid #fbd775");
 
 }
+function drawTotal(count, filter_data, c1, c2, category, variable, unit, width_ratio){
+	max_total = Math.max(filter_data[0].districts[7],filter_data[0].districts[1],filter_data[0].districts[2],filter_data[0].districts[3],filter_data[0].districts[4],filter_data[0].districts[5],filter_data[0].districts[6],
+		filter_data[1].districts[7],filter_data[1].districts[1],filter_data[1].districts[2],filter_data[1].districts[3],filter_data[1].districts[4],filter_data[1].districts[5],filter_data[1].districts[6]);
+	d3.select("#chart"+"3"+count).selectAll("svg").remove();
+	d3.select("#table"+"3"+count).selectAll("table").remove();
+	var svg3 = d3.select("#chart"+"3"+count).append("svg").attr("width",500).attr("height",250);
+	for(var i = 1; i<=7 ; i++){
+		svg3.append("rect").attr("width",20).attr("height",0).attr("fill","#f8bc19").attr("x",i*70-70).attr("y",200).transition().duration(1000).attr("height",filter_data[0].districts[i]/max_total*180).attr("y",200-filter_data[0].districts[i]/max_total*180);
+		svg3.append("rect").attr("width",20).attr("height",0).attr("fill","#fbd775").attr("x",i*70-40).attr("y",200).transition().duration(1000).attr("height",filter_data[1].districts[i]/max_total*180).attr("y",200-filter_data[1].districts[i]/max_total*180);
+		svg3.append("text").attr("x",i*70-70).attr("fill","#f8bc19").attr("y",210).attr("font-size","10px").text(filter_data[0].year);
+		svg3.append("text").attr("x",i*70-40).attr("fill","#fbd775").attr("y",210).attr("font-size","10px").text(filter_data[1].year);
+		svg3.append("text").attr("fill","#f8bc19").attr("x",i*70-70).attr("y",190-filter_data[0].districts[i]/max_total*180).attr("font-size","8px").text(numberFormat(filter_data[0].districts[i]));
+		svg3.append("text").attr("fill","#fbd775").attr("x",i*70-40).attr("y",190-filter_data[1].districts[i]/max_total*180).attr("font-size","8px").text(numberFormat(filter_data[1].districts[i]));
+		svg3.append("text").attr("x",i*70-70).attr("fill","black").attr("y",225).attr("font-size","13px").text("District"+i);
+	}
+	
+	var info3 = "<p>Category : " + category + "</p><p>Variable :" +  variable + "</p><p>Unit : " + unit 
+				+ "</p><p>Year" + filter_data[0].year + " : " + numberFormat(filter_data[0].districts.total) +  "</p><p>Year" + filter_data[1].year + " : " + numberFormat(filter_data[1].districts.total);
+	d3.select("#intro"+"3"+count).selectAll("p").remove();
+	d3.select("#intro"+"3"+count).html(info3);
+	d3.select("#block"+"3"+count).style("border-bottom","1px solid #fbd775");
+}
+function drawDataTable(count, filter_data, c1, c2, category, variable, unit){
+	d3.select("#chart"+"1"+count).selectAll("svg").remove();
+	d3.select("#chart"+"1"+count).selectAll("table").remove();
+	var info1 = "<table><tr><td style='font-size:15px;'>"+category+"</td><td>" + filter_data[0].year + "</td><td>" + filter_data[1].year + "</td></tr><tr><td>"
+				+ variable + "("+ unit +")</td><td>"+numberFormat(filter_data[0].districts[c1])+"</td><td>"+numberFormat(filter_data[1].districts[c1])+"</td></tr></table>";
+	d3.select("#intro"+"1"+count).html(info1);
+	d3.select("#intro"+"1"+count).style("border-bottom","1px solid #fbd775");
 
+	d3.select("#chart"+"2"+count).selectAll("svg").remove();
+	d3.select("#chart"+"2"+count).selectAll("table").remove();
+	var info2 = "<table><tr><td style='font-size:15px;'>"+category+"</td><td>" + filter_data[0].year + "</td><td>" + filter_data[1].year + "</td></tr><tr><td>"
+				+ variable + "("+ unit +")</td><td>"+numberFormat(filter_data[0].districts[c2])+"</td><td>"+numberFormat(filter_data[1].districts[c2])+"</td></tr></table>";
+	d3.select("#intro"+"2"+count).html(info2);
+	d3.select("#intro"+"2"+count).style("border-bottom","1px solid #fbd775");
 
+	d3.select("#block"+"3"+count).selectAll("svg").remove();
+	d3.select("#block"+"3"+count).selectAll("p").remove();
+	d3.select("#table"+"3"+count).selectAll("table").remove();
+	var info3 = "<table><tr><td style='font-size:15px;'>"+category+"</td><td>" + filter_data[0].year + "</td><td>" + filter_data[1].year + "</td></tr><tr><td>"
+				+ variable + "("+ unit +")</td><td>"+numberFormat(filter_data[0].districts.total)+"</td><td>"+numberFormat(filter_data[1].districts.total)+"</td></tr></table>";
+	d3.select("#table"+"3"+count).html(info3);
+	d3.select("#block"+"3"+count).style("border-bottom","1px solid #fbd775");
+}
 
 
 

@@ -97,7 +97,7 @@ header .nav{
 	float: left;
 	text-align: center;
 	font-size: 18px;
-	margin:30px auto 10px auto;
+	margin:20px auto 10px auto;
 	font-weight: bold;
 	color: #f8bc19;
 	font-family: Oswald, Arial;
@@ -172,16 +172,15 @@ header .nav{
 .half-tab{
 	margin: 0;
 	width: 295px;
-	height: 822px;
+	min-height: 810px;
 	float: left;
-	overflow: auto;
 }
 .first-half-tab{
 	border-right: 1px solid #FFCF48;
 }
 .chart-block{
 	width: 590px;
-	margin: 10px 5px;
+	margin: 0px 5px;
 	float: left;
 }
 .chart{
@@ -189,19 +188,34 @@ header .nav{
 	margin: 0px 20px;
 	float: left;
 }
+.chart svg{
+	margin-top: 10px;
+}
 .chart-intro{
 	float: left;
 	width: 255px;
-	margin: 10px 20px;
+	margin: 0px 20px;
 	font-size: 12px;
 	border:  0px;
 }
+.chart-intro p{
+	padding-top: 5px;
+}
 .chart-block .chart{
-	margin:20px 20px;
+	margin: 0 20px;
+	width: 500px;
+}
+.chart-block .chart svg{
+	margin-top: 10px;
 }
 .chart-block .chart-intro{
 	border-bottom: 0px;
 	margin: 0px 20px;
+	width: 500px;
+}
+.chart-block .chart-intro p{
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
 .styled-select select {
    background: transparent;
@@ -232,13 +246,17 @@ table{
 .chart-block table{
 	width: 540px;
 	margin-left: 20px;
+	margin-top: 20px;
+}
+.chart-intro table{
+	margin-top: 20px;
 }
 table, tr, td {
     border: 1px solid #FFCF48;
 }
 td{
 	text-align: center;
-	padding: 10px;
+	padding: 5px;
 }
 
 .content {
@@ -252,10 +270,14 @@ td{
   border: 1px solid #ccc; 
   border-radius: 0 0 10px 10px;
   height: 810px;
+  overflow: auto;
 }
 #total{
 	overflow-y: auto;
 	overflow-x: hidden;
+}
+[type=radio] ~ label{
+	opacity: 0.5;
 }
 [type=radio]:checked ~ label {
   border-bottom: 1px solid white;
@@ -280,7 +302,7 @@ input[type=checkbox].css-checkbox {
 
 input[type=checkbox].css-checkbox + label.css-label {
 	padding-left:26px;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 	height:19px; 
 	display:inline-block;
 	line-height:19px;
@@ -290,6 +312,9 @@ input[type=checkbox].css-checkbox + label.css-label {
 	vertical-align:middle;
 	cursor:pointer;
 
+}
+label.css-label img{
+	margin-left: 10px;
 }
 
 input[type=checkbox].css-checkbox:checked + label.css-label {
@@ -313,5 +338,46 @@ label.css-label {
 }
 
 .area {
-  fill: steelblue;
+  fill: #f8bc19;
+}
+
+.tooltip{
+  position: absolute;
+  margin-left: -70px;
+  z-index: 1001;
+  width: 150px;
+  height: auto;
+  border: 1px solid #000000;
+  padding: 10px;
+  color: #dddddd;
+  border-radius: 5px;
+  pointer-events: none;
+  box-shadow:0 0 10px 1px #555;
+  background-image: -moz-linear-gradient(#231F20, #58595B);
+  background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #231F20),color-stop(1, #58595B));
+  opacity:0.9;
+  filter:alpha(opacity=90);    
+}
+
+.example-image:hover{
+  opacity: 0.8;
+  border-bottom: 2px solid #eeeeee;
+}
+
+.show-option{
+	float: right;
+}
+
+.show-option select {
+   background: #4ec978;
+   width: 180px;
+   padding: 5px;
+   font-size: 15px;
+   line-height: 1;
+   border: 1px solid #4ec978;
+   border-radius: 5px;
+   height: 34px;
+   margin-left: 20px;
+   margin-bottom: 20px;
+   color: white;
 }

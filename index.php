@@ -13,46 +13,64 @@ require_once "header.php";
 	<div class="filter-block">
 		<div class="filter-head"><p>Variables</p></div>
 		<div class="filter-content">
+			<!-- <div class="filter-btn" id="show-chart">Show in Charts</div>
+			<div class="filter-btn" id="show-table">Show in Tables</div> -->
 			<div class="filter-title">Air</div>
 			<div class="filter-option">
-				<input id="filter1" class="css-checkbox" type="checkbox" />
-				<label for="filter1" name="filter_1" class="css-label">GHG Emissions by TRI Facilities</label>
-				<input id="filter2" class="css-checkbox" type="checkbox" />
-				<label for="filter2" name="filter_2" class="css-label">Total Air Releases</label>
-				<input type="radio" name="air" value = "1"><p>GHG Emissions by TRI Facilities</p></input><br />
-				<input type="radio" name="air" value = "2"><p>Total Air Releases</p></input><br />
+				<input id="air1" class="css-checkbox" type="checkbox" />
+				<label for="air1" name="air_1" class="css-label">GHG Emissions by TRI Facilities<img src="img/info.png" width="10" height="10"/></label>
+				<input id="air2" class="css-checkbox" type="checkbox" />
+				<label for="air2" name="air_2" class="css-label">Total Air Releases<img src="img/info.png" width="10" height="10"/></label>
+			<!-- 	<input type="radio" name="air" value = "1"><p>GHG Emissions by TRI Facilities</p></input><br />
+				<input type="radio" name="air" value = "2"><p>Total Air Releases</p></input><br /> -->
 			</div>
 			<div class="filter-title">Health</div>
 			<div class="filter-option">
-				<input type="radio" name="health" value = "1"><p>Elevated Blood Lead Level(EBLL)</p></input><br />
-				<input type="radio" name="health" value = "2"><p>Infant Mortality Rate</p></input><br />
+				<input id="health1" class="css-checkbox" type="checkbox" />
+				<label for="health1" name="health_1" class="css-label">Elevated Blood Lead Level(EBLL)<img src="img/info.png" width="10" height="10"/></label>
+				<input id="health2" class="css-checkbox" type="checkbox" />
+				<label for="health2" name="health_2" class="css-label">Infant Mortality Rate<img src="img/info.png" width="10" height="10"/></label>
+				<!-- <input type="radio" name="health" value = "1"><p>Elevated Blood Lead Level(EBLL)</p></input><br />
+				<input type="radio" name="health" value = "2"><p>Infant Mortality Rate</p></input><br /> -->
 			</div>
-			<input id="demo_box_1" class="css-checkbox" type="checkbox" />
-			<label for="demo_box_1" name="demo_lbl_1" class="css-label">Option #1</label>
 			<div class="filter-title">Land</div>
 			<div class="filter-option">
-				<input type="radio" name="land" value = "1"><p>Cumulative Trees Planted</p></input><br />
-			</div>
+				<input id="land" class="css-checkbox" type="checkbox" />
+				<label for="land" name="land" class="css-label">Cumulative Trees Planted<img src="img/info.png" width="10" height="10"/></label>
+<!-- 				<input type="radio" name="land" value = "1"><p>Cumulative Trees Planted</p></input><br />
+ -->			</div>
 			<div class="filter-title">Neighborhoods</div>
 			<div class="filter-option">
-				<input type="radio" name="neighbor" value = "1"><p>Residential in need of demo</p></input><br />
-			</div>
+				<input id="neighbor" class="css-checkbox" type="checkbox" />
+				<label for="neighbor" name="neighbor" class="css-label">Residential in need of demo<img src="img/info.png" width="10" height="10"/></label>
+<!-- 				<input type="radio" name="neighbor" value = "1"><p>Residential in need of demo</p></input><br />
+ -->			</div>
 			<div class="filter-title">Transportation</div>
 			<div class="filter-option">
-				<input type="radio" name="trans" value = "1"><p>Cumulative Miles of Bike Lanes</p></input><br />
-			</div>
+				<input id="trans" class="css-checkbox" type="checkbox" />
+				<label for="trans" name="trans" class="css-label">Cumulative Miles of Bike Lanes<img src="img/info.png" width="10" height="10"/></label>
+<!-- 				<input type="radio" name="trans" value = "1"><p>Cumulative Miles of Bike Lanes</p></input><br />
+ -->			</div>
 			<div class="filter-title">Waste</div>
 			<div class="filter-option">
-				<input type="radio" name="waste" value = "1"><p>Percent of Households Covered by Curbside Recycling</p></input><br />
-				<input type="radio" name="waste" value = "2"><p>Total Onsite Land Releases (TRI)</p></input><br />
+				<input id="waste1" class="css-checkbox" type="checkbox" />
+				<label for="waste1" name="waste_1" class="css-label">Percent of Households Covered by Curbside Recycling<img src="img/info.png" width="10" height="10"/></label>
+				<input id="waste2" class="css-checkbox" type="checkbox" />
+				<label for="waste2" name="waste_2" class="css-label">Total Onsite Land Releases (TRI)<img src="img/info.png" width="10" height="10"/></label>
+				<!-- <input type="radio" name="waste" value = "1"><p>Percent of Households Covered by Curbside Recycling</p></input><br />
+				<input type="radio" name="waste" value = "2"><p>Total Onsite Land Releases (TRI)</p></input><br /> -->
 			</div>
-			<div class="filter-btn" id="show-chart">Show in Charts</div>
-			<div class="filter-btn" id="show-table">Show in Tables</div>
+			
 		</div>
 		
 	</div>
 	<div class="tabs">
-    
+    	<div class="show-option">
+    		<select id="showoption">
+					      <option value="1" selected>Show in Chart</option>
+					      <option value="2">Show in Table</option>
+			</select>
+    	</div>
 	   <div class="tab">
 	       <input type="radio" id="tab-1" name="tab-group-1" checked>
 	       <label for="tab-1" class="tab1">District</label>
@@ -157,6 +175,21 @@ require_once "header.php";
 					<div id="table36"></div>
 	       			<div id="chart36" class="chart"></div>
 					<div id="intro36"class="chart-intro"></div>
+				</div>
+				<div class="chart-block" id="block37">
+					<div id="table37"></div>
+	       			<div id="chart37" class="chart"></div>
+					<div id="intro37"class="chart-intro"></div>
+				</div>
+				<div class="chart-block" id="block38">
+					<div id="table38"></div>
+	       			<div id="chart38" class="chart"></div>
+					<div id="intro38"class="chart-intro"></div>
+				</div>
+				<div class="chart-block" id="block39">
+					<div id="table39"></div>
+	       			<div id="chart39" class="chart"></div>
+					<div id="intro39"class="chart-intro"></div>
 				</div>
 	       
 	       </div> 
